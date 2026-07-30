@@ -3,10 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Compressor — local, in your browser</title>
-<meta name="description" content="Free image compressor that runs entirely in your browser. Compress JPG, PNG, WEBP, GIF and BMP images locally (or a whole .zip) — nothing is uploaded — and keep the original filename with a -compress tag added.">
+<title>Image Compressor — Compress JPG, PNG, WEBP Online for Free</title>
+<meta name="description" content="Free online image compressor. Compress and convert JPG, JPEG, PNG, WEBP, GIF and BMP images — or a whole ZIP archive — directly in your browser. No upload, no signup, no watermark. Keeps the original filename with a -compress tag.">
 <meta name="theme-color" content="#EEEFE9">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 10V4H10' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M22 4H28V10' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M28 22V28H22' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10 28H4V22' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='11.5' y='11.5' width='9' height='9' rx='1.5' fill='%232F7A5C'/%3E%3C/svg%3E">
+<meta name="keywords" content="image compressor, compress image, compress images online, image optimizer, reduce image size, shrink image, compress jpg, compress jpeg, compress png, compress webp, compress gif, convert png to jpg, convert image, image converter, bulk image compressor, batch compress images, zip image compressor, free image compressor, online image compressor, compress photo, photo compressor, optimize images for web, lossy compression, image size reducer, no upload image compressor, offline image compressor, privacy image compressor">
+<link rel="canonical" href="https://compress-image.github.io/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow">
+<meta name="yandex" content="index, follow">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="application-name" content="Image Compressor">
+<meta name="apple-mobile-web-app-title" content="Image Compressor">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Image Compressor">
+<meta property="og:url" content="https://compress-image.github.io/">
+<meta property="og:title" content="Image Compressor — Compress JPG, PNG, WEBP Online for Free">
+<meta property="og:description" content="Compress and convert images right in your browser. Nothing is uploaded, nothing is stored. Supports JPG, PNG, WEBP, GIF, BMP and ZIP archives.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image Compressor — Compress JPG, PNG, WEBP Online for Free">
+<meta name="twitter:description" content="Compress and convert images locally in your browser. No upload, no signup, no watermark.">
+<!-- Search engine verification: paste your own codes here if you register the site -->
+<!-- <meta name="google-site-verification" content="YOUR_GOOGLE_CODE"> -->
+<!-- <meta name="yandex-verification" content="YOUR_YANDEX_CODE"> -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Compressor",
+  "url": "https://compress-image.github.io/",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any (runs in a web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Free browser-based image compressor and converter for JPG, PNG, WEBP, GIF and BMP images, with ZIP archive support. All processing happens locally on the user's device.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Compress JPG, PNG, WEBP, GIF and BMP",
+    "Extract and compress images from ZIP archives",
+    "Adjustable quality presets and slider",
+    "Convert PNG to JPEG",
+    "Batch download as ZIP",
+    "Light and dark theme",
+    "Fully client-side, no uploads"
+  ],
+  "isAccessibleForFree": true,
+  "license": "https://opensource.org/licenses/MIT",
+  "codeRepository": "https://github.com/compress-image/compress-image.github.io"
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -388,7 +438,7 @@
         <span class="brand-text">image-compressor</span>
       </div>
       <div class="topbar-actions">
-        <a class="icon-btn" href="https://github.com/Ave-Roma/Ave-Roma.github.io" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">
+        <a class="icon-btn" href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4L4 12L8 20"/><path d="M16 4L20 12L16 20"/></svg>
         </a>
         <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode">
@@ -450,7 +500,7 @@
       <button class="action-btn primary" id="downloadAll" disabled>Download all</button>
     </div>
 
-    <footer>Runs entirely client-side · no uploads, no analytics, no tracking · <a href="https://github.com/Ave-Roma/Ave-Roma.github.io" target="_blank" rel="noopener noreferrer">source on GitHub</a></footer>
+    <footer>Runs entirely client-side · no uploads, no analytics, no tracking · <a href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer">source on GitHub</a></footer>
   </div>
 
 <script>
