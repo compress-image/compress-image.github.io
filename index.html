@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Compressor — local, in your browser</title>
+<meta name="description" content="Free image compressor that runs entirely in your browser. Compress JPG, PNG, WEBP, GIF and BMP images locally (or a whole .zip) — nothing is uploaded — and keep the original filename with a -compress tag added.">
+<meta name="theme-color" content="#EEEFE9">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 10V4H10' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M22 4H28V10' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M28 22V28H22' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10 28H4V22' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='11.5' y='11.5' width='9' height='9' rx='1.5' fill='%232F7A5C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEEFE9;
+    --surface:#FFFFFF;
+    --ink:#1C1E1B;
+    --ink-dim:#6B6F66;
+    --line:#D8D9D0;
+    --before:#C1622B;
+    --before-soft:#F3DDCB;
+    --after:#2F7A5C;
+    --after-soft:#D9EAE1;
+  }
+
+  [data-theme="dark"]{
+    --bg:#14161A;
+    --surface:#1B1E23;
+    --ink:#EDEEE9;
+    --ink-dim:#9AA0AA;
+    --line:#2B2F36;
+    --before:#E08A52;
+    --before-soft:#3A2A1E;
+    --after:#4FAE86;
+    --after-soft:#1C332A;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  body{
+    min-height:100vh;
+    padding:32px 20px 80px;
+    transition:background .2s ease, color .2s ease;
+  }
+
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+  }
+
+  /* ---------- topbar ---------- */
+
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:44px;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--ink-dim);
+  }
+
+  .brand-mark{ width:20px; height:20px; flex:none; }
+  .brand-mark path{ stroke:var(--before); stroke-width:2.6; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .brand-mark rect{ fill:var(--after); }
+
+  .brand-text{
+    font-size:12.5px;
+    letter-spacing:.02em;
+  }
+
+  .topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .icon-btn{
+    width:30px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-dim);
+    cursor:pointer;
+    text-decoration:none;
+  }
+  .icon-btn:hover{ border-color:var(--ink); color:var(--ink); }
+  .icon-btn svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+  .icon-moon{ display:block; }
+  .icon-sun{ display:none; }
+  [data-theme="dark"] .icon-moon{ display:none; }
+  [data-theme="dark"] .icon-sun{ display:block; }
+
+  /* ---------- hero ---------- */
+
+  .hero{ text-align:center; }
+
+  .eyebrow{
+    display:inline-flex;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 14px;
+    align-items:center;
+    gap:10px;
+  }
+
+  .eyebrow .mark{
+    width:14px;
+    height:14px;
+    border:2px solid var(--ink-dim);
+    border-right:none;
+    border-bottom:none;
+    display:inline-block;
+  }
+
+  h1{
+    font-family:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    font-weight:600;
+    font-size:clamp(28px, 4.4vw, 40px);
+    line-height:1.12;
+    letter-spacing:-0.01em;
+    margin:0 0 16px;
+  }
+
+  .sub{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ink-dim);
+    max-width:46ch;
+    margin:0 auto 40px;
+  }
+
+  /* ---------- dropzone ---------- */
+
+  .dropzone{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--surface);
+    padding:56px 20px;
+    text-align:center;
+    cursor:pointer;
+    outline-offset:4px;
+  }
+
+  .dropzone.dropzone-active{
+    background:var(--after-soft);
+    border-color:var(--after);
+  }
+
+  .corner{ position:absolute; width:18px; height:18px; }
+  .corner-tl{ top:12px; left:12px; border-top:2px solid var(--ink); border-left:2px solid var(--ink); }
+  .corner-tr{ top:12px; right:12px; border-top:2px solid var(--ink); border-right:2px solid var(--ink); }
+  .corner-bl{ bottom:12px; left:12px; border-bottom:2px solid var(--ink); border-left:2px solid var(--ink); }
+  .corner-br{ bottom:12px; right:12px; border-bottom:2px solid var(--ink); border-right:2px solid var(--ink); }
+
+  .dropzone-icon{ width:34px; height:34px; margin:0 auto 18px; color:var(--ink-dim); }
+
+  .dropzone-title{
+    font-family:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    font-weight:600;
+    font-size:18px;
+    margin:0 0 8px;
+  }
+
+  .dropzone-sub{ font-size:12.5px; color:var(--ink-dim); margin:0; }
+
+  .notice{
+    margin-top:14px;
+    font-size:12px;
+    color:var(--before);
+    text-align:center;
+  }
+
+  /* ---------- controls ---------- */
+
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:24px;
+    margin:28px 0 8px;
+    padding:18px 20px;
+    background:var(--surface);
+    border:1px solid var(--line);
+  }
+
+  .quality-row{ display:flex; flex-direction:column; gap:10px; flex:1 1 320px; }
+
+  .quality-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .quality-head > label{
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+
+  .quality-chips{ display:flex; gap:6px; }
+
+  .chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.03em;
+    padding:5px 10px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-dim);
+    cursor:pointer;
+  }
+  .chip:hover{ border-color:var(--ink); color:var(--ink); }
+  .chip.chip-active{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+
+  .quality-slider-row{ display:flex; align-items:center; gap:14px; }
+
+  input[type="range"]{ flex:1; accent-color:var(--ink); height:2px; }
+
+  .quality-value{ font-size:13.5px; font-weight:600; min-width:98px; text-align:right; white-space:nowrap; }
+
+  .control-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    cursor:pointer;
+  }
+  .control-toggle input{ accent-color:var(--ink); width:14px; height:14px; }
+
+  /* ---------- list ---------- */
+
+  .list{ margin-top:2px; }
+
+  .empty-state{
+    font-size:13px;
+    color:var(--ink-dim);
+    text-align:center;
+    padding:28px 20px;
+    border:1px dashed var(--line);
+    border-top:none;
+  }
+
+  .row{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-top:none;
+    padding:14px 20px 16px;
+  }
+
+  .row-main{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+  .row-name{
+    font-size:13px;
+    font-weight:500;
+    max-width:220px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .format-note{ font-size:10.5px; color:var(--ink-dim); white-space:nowrap; }
+
+  .row-sizes{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-left:auto;
+  }
+
+  .size-before{ color:var(--before); }
+  .size-after{ color:var(--after); font-weight:600; }
+  .row-arrow{ color:var(--ink-dim); }
+
+  .row-badge{
+    font-size:11px;
+    font-weight:600;
+    padding:3px 8px;
+    border:1px solid var(--after);
+    color:var(--after);
+  }
+  .row-badge.badge-neutral{ border-color:var(--line); color:var(--ink-dim); }
+
+  .row-download{
+    width:28px;
+    height:28px;
+    border:1px solid var(--ink);
+    background:var(--surface);
+    color:var(--ink);
+    cursor:pointer;
+    font-size:14px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+  }
+  .row-download:hover:not(:disabled){ background:var(--ink); color:var(--surface); }
+  .row-download:disabled{ opacity:.35; cursor:default; }
+
+  .row.row-error .size-after,
+  .row.row-toolarge .size-after{ color:var(--before); }
+
+  .bar{ margin-top:10px; height:4px; background:var(--before-soft); overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--after); width:100%; transition:width .25s ease; }
+
+  /* ---------- actions ---------- */
+
+  .actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:16px; }
+
+  button.action-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    font-weight:500;
+    letter-spacing:.03em;
+    padding:10px 18px;
+    border:1px solid var(--ink);
+    background:var(--surface);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  button.action-btn:hover:not(:disabled){ background:var(--ink); color:var(--surface); }
+  button.action-btn:disabled{ opacity:.35; cursor:default; }
+  button.action-btn.primary{ background:var(--ink); color:var(--surface); }
+  button.action-btn.primary:hover:not(:disabled){ opacity:.85; }
+  button.action-btn.primary:disabled{ background:var(--ink); opacity:.25; }
+
+  footer{
+    margin-top:56px;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    text-align:center;
+  }
+  footer a{ color:var(--ink-dim); }
+  footer a:hover{ color:var(--ink); }
+
+  :focus-visible{ outline:2px solid var(--ink); outline-offset:2px; }
+
+  @media (max-width:480px){
+    body{ padding:24px 14px 60px; }
+    .row-sizes{ margin-left:0; }
+    .row-name{ max-width:100%; }
+    .controls{ gap:18px; }
+    .brand-text{ display:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M4 10V4H10"/>
+          <path d="M22 4H28V10"/>
+          <path d="M28 22V28H22"/>
+          <path d="M10 28H4V22"/>
+          <rect x="12" y="12" width="8" height="8" rx="1.5"/>
+        </svg>
+        <span class="brand-text">image-compressor</span>
+      </div>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="https://github.com/Ave-Roma/Ave-Roma.github.io" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4L4 12L8 20"/><path d="M16 4L20 12L16 20"/></svg>
+        </a>
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <p class="eyebrow"><span class="mark"></span>Local image compression</p>
+      <h1>Shrink your images without leaving the browser.</h1>
+      <p class="sub">Everything is resized and re-encoded on your device — nothing is uploaded, nothing is stored. Downloads keep the original filename with a <code>-compress</code> tag added.</p>
+    </div>
+
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose images to compress">
+      <span class="corner corner-tl"></span>
+      <span class="corner corner-tr"></span>
+      <span class="corner corner-bl"></span>
+      <span class="corner corner-br"></span>
+      <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+        <rect x="3" y="5" width="18" height="14" rx="1"></rect>
+        <circle cx="9" cy="11" r="2.2"></circle>
+        <path d="M21 16l-5.5-5-4 4-2-2L3 18"></path>
+      </svg>
+      <p class="dropzone-title">Drop images here</p>
+      <p class="dropzone-sub">or click to choose · JPG · PNG · WEBP · GIF · BMP · ZIP — up to 20 MB per file</p>
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,.zip,application/zip,application/x-zip-compressed" multiple hidden>
+    </div>
+    <p class="notice" id="notice" hidden></p>
+
+    <div class="controls">
+      <div class="quality-row">
+        <div class="quality-head">
+          <label for="quality">Quality</label>
+          <div class="quality-chips" id="qualityChips">
+            <button type="button" class="chip" data-value="40">Low</button>
+            <button type="button" class="chip" data-value="65">Medium</button>
+            <button type="button" class="chip" data-value="80">High</button>
+            <button type="button" class="chip" data-value="95">Best</button>
+          </div>
+        </div>
+        <div class="quality-slider-row">
+          <input type="range" id="quality" min="10" max="100" value="80" step="1">
+          <span class="quality-value" id="qualityValue">80% · High</span>
+        </div>
+      </div>
+      <label class="control-toggle">
+        <input type="checkbox" id="pngToJpeg">
+        Convert PNG → JPEG for smaller files (drops transparency)
+      </label>
+    </div>
+
+    <div class="list" id="list"></div>
+    <p class="empty-state" id="emptyState">No images yet — drop a few above (or a .zip of them) to see the size drop.</p>
+
+    <div class="actions">
+      <button class="action-btn" id="clearAll" disabled>Clear all</button>
+      <button class="action-btn primary" id="downloadAll" disabled>Download all</button>
+    </div>
+
+    <footer>Runs entirely client-side · no uploads, no analytics, no tracking · <a href="https://github.com/Ave-Roma/Ave-Roma.github.io" target="_blank" rel="noopener noreferrer">source on GitHub</a></footer>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const list = document.getElementById('list');
+  const emptyState = document.getElementById('emptyState');
+  const notice = document.getElementById('notice');
+  const qualityInput = document.getElementById('quality');
+  const qualityValue = document.getElementById('qualityValue');
+  const qualityChips = document.getElementById('qualityChips');
+  const pngToggle = document.getElementById('pngToJpeg');
+  const downloadAllBtn = document.getElementById('downloadAll');
+  const clearAllBtn = document.getElementById('clearAll');
+  const themeToggle = document.getElementById('themeToggle');
+
+  const EXT_MIME = { jpg:'image/jpeg', jpeg:'image/jpeg', png:'image/png', webp:'image/webp', gif:'image/gif', bmp:'image/bmp' };
+  const SUPPORTED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/bmp'];
+  const MAX_FILE_SIZE = 20 * 1024 * 1024;
+  const MAX_DIMENSION = 8000;
+
+  let items = [];
+  let uid = 0;
+  let debounceTimer = null;
+  let noticeTimer = null;
+  let jszipPromise = null;
+
+  /* ---------- theme ---------- */
+
+  const root = document.documentElement;
+  function systemPrefersDark(){
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  root.setAttribute('data-theme', systemPrefersDark() ? 'dark' : 'light');
+  themeToggle.addEventListener('click', function(){
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+  });
+
+  /* ---------- helpers ---------- */
+
+  function formatBytes(bytes){
+    if(bytes < 1024) return bytes + ' B';
+    if(bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function splitName(filename){
+    const dot = filename.lastIndexOf('.');
+    if(dot <= 0) return { base: filename, ext: '' };
+    return { base: filename.slice(0, dot), ext: filename.slice(dot + 1) };
+  }
+
+  function buildCompressedName(originalName, forcedExt){
+    const { base, ext } = splitName(originalName);
+    const finalExt = forcedExt || ext || 'jpg';
+    return base + '-compress.' + finalExt;
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, function(c){
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function detectImageMime(file){
+    if(SUPPORTED_TYPES.indexOf(file.type) !== -1) return file.type;
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    return EXT_MIME[ext] || null;
+  }
+
+  function isZip(file){
+    return file.type === 'application/zip' ||
+      file.type === 'application/x-zip-compressed' ||
+      /\.zip$/i.test(file.name);
+  }
+
+  function showNotice(msg){
+    notice.textContent = msg;
+    notice.hidden = false;
+    clearTimeout(noticeTimer);
+    noticeTimer = setTimeout(function(){ notice.hidden = true; }, 5000);
+  }
+
+  function ensureJSZip(){
+    if(window.JSZip) return Promise.resolve(window.JSZip);
+    if(jszipPromise) return jszipPromise;
+    jszipPromise = new Promise(function(resolve, reject){
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+      s.onload = function(){ resolve(window.JSZip); };
+      s.onerror = function(){ jszipPromise = null; reject(new Error('load failed')); };
+      document.head.appendChild(s);
+    });
+    return jszipPromise;
+  }
+
+  /* ---------- quality ---------- */
+
+  function qualityTier(v){
+    if(v < 50) return 'Low';
+    if(v < 70) return 'Medium';
+    if(v < 90) return 'High';
+    return 'Best';
+  }
+
+  function updateQualityLabel(){
+    const v = Number(qualityInput.value);
+    qualityValue.textContent = v + '% · ' + qualityTier(v);
+    Array.prototype.forEach.call(qualityChips.querySelectorAll('.chip'), function(btn){
+      const active = Number(btn.dataset.value) === v;
+      btn.classList.toggle('chip-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  qualityChips.addEventListener('click', function(e){
+    const btn = e.target.closest('.chip');
+    if(!btn) return;
+    qualityInput.value = btn.dataset.value;
+    updateQualityLabel();
+    clearTimeout(debounceTimer);
+    recompressAll();
+  });
+
+  qualityInput.addEventListener('input', function(){
+    updateQualityLabel();
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(recompressAll, 200);
+  });
+
+  pngToggle.addEventListener('change', recompressAll);
+
+  /* ---------- file intake ---------- */
+
+  function addFiles(fileList){
+    const incoming = Array.from(fileList);
+    const zipFiles = incoming.filter(isZip);
+    const rest = incoming.filter(function(f){ return !isZip(f); });
+
+    zipFiles.forEach(handleZipFile);
+
+    const files = [];
+    let skipped = 0;
+    rest.forEach(function(f){
+      if(detectImageMime(f)) files.push(f); else skipped++;
+    });
+    if(skipped > 0){
+      showNotice(skipped + (skipped === 1 ? ' file' : ' files') + ' skipped — unsupported format');
+    }
+    if(files.length === 0) return;
+
+    emptyState.hidden = true;
+    files.forEach(function(file){
+      const mime = detectImageMime(file);
+      const item = {
+        id: 'img' + (uid++),
+        file: file,
+        mime: mime,
+        name: file.name,
+        originalSize: file.size,
+        status: 'processing',
+        compressedBlob: null,
+        compressedSize: 0,
+        compressedName: '',
+        url: null,
+        rowEl: null
+      };
+      items.push(item);
+      renderRow(item);
+      if(file.size > MAX_FILE_SIZE){
+        markTooLarge(item);
+      } else {
+        compressItem(item);
+      }
+    });
+    updateGlobalButtons();
+  }
+
+  function handleZipFile(file){
+    ensureJSZip().then(function(JSZipLib){
+      return JSZipLib.loadAsync(file);
+    }).then(function(zip){
+      const entries = [];
+      zip.forEach(function(path, entry){ if(!entry.dir) entries.push(entry); });
+      const validEntries = entries.filter(function(entry){
+        const ext = (entry.name.split('.').pop() || '').toLowerCase();
+        return !!EXT_MIME[ext];
+      });
+      if(validEntries.length === 0){
+        showNotice('No supported images found inside ' + file.name);
+        return;
+      }
+      return Promise.all(validEntries.map(function(entry){
+        const ext = (entry.name.split('.').pop() || '').toLowerCase();
+        return entry.async('blob').then(function(blob){
+          const shortName = entry.name.split('/').pop();
+          return new File([blob], shortName, { type: EXT_MIME[ext] });
+        });
+      })).then(function(extractedFiles){
+        addFiles(extractedFiles);
+      });
+    }).catch(function(){
+      showNotice('Could not read ' + file.name + ' as a zip');
+    });
+  }
+
+  /* ---------- rendering ---------- */
+
+  function renderRow(item){
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.id = 'row-' + item.id;
+    const forced = item.mime === 'image/gif' || item.mime === 'image/bmp';
+    row.innerHTML =
+      '<div class="row-main">' +
+        '<span class="row-name" title="' + escapeHtml(item.name) + '">' + escapeHtml(item.name) + '</span>' +
+        (forced ? '<span class="format-note">auto &rarr; JPG</span>' : '') +
+        '<span class="row-sizes">' +
+          '<span class="size-before">' + formatBytes(item.originalSize) + '</span>' +
+          '<span class="row-arrow">&rarr;</span>' +
+          '<span class="size-after" data-role="after">compressing…</span>' +
+        '</span>' +
+        '<span class="row-badge badge-neutral" data-role="badge">&mdash;</span>' +
+        '<button class="row-download" data-role="download" disabled aria-label="Download compressed ' + escapeHtml(item.name) + '">&darr;</button>' +
+      '</div>' +
+      '<div class="bar"><div class="bar-fill" data-role="fill" style="width:100%"></div></div>';
+    list.appendChild(row);
+    item.rowEl = row;
+    row.querySelector('[data-role="download"]').addEventListener('click', function(){ downloadItem(item); });
+  }
+
+  function compressItem(item){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = new Image();
+      img.onload = function(){
+        const quality = Number(qualityInput.value) / 100;
+        const isPng = item.mime === 'image/png';
+        const forcedJpeg = item.mime === 'image/gif' || item.mime === 'image/bmp';
+        const convertPng = isPng && pngToggle.checked;
+        const outMime = forcedJpeg ? 'image/jpeg' : (convertPng ? 'image/jpeg' : item.mime);
+        const needsWhiteBg = forcedJpeg || convertPng;
+
+        let w = img.naturalWidth, h = img.naturalHeight;
+        const longest = Math.max(w, h);
+        if(longest > MAX_DIMENSION){
+          const scale = MAX_DIMENSION / longest;
+          w = Math.round(w * scale);
+          h = Math.round(h * scale);
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+
+        if(needsWhiteBg){
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, w, h);
+        }
+        ctx.drawImage(img, 0, 0, w, h);
+
+        canvas.toBlob(function(blob){
+          if(!blob){ markError(item); return; }
+          if(item.url) URL.revokeObjectURL(item.url);
+          item.compressedBlob = blob;
+          item.compressedSize = blob.size;
+          item.compressedName = buildCompressedName(item.name, (forcedJpeg || convertPng) ? 'jpg' : null);
+          item.url = URL.createObjectURL(blob);
+          item.status = 'done';
+          updateRow(item);
+          updateGlobalButtons();
+        }, outMime, outMime === 'image/png' ? undefined : quality);
+      };
+      img.onerror = function(){ markError(item); };
+      img.src = e.target.result;
+    };
+    reader.onerror = function(){ markError(item); };
+    reader.readAsDataURL(item.file);
+  }
+
+  function markError(item){
+    item.status = 'error';
+    const row = item.rowEl;
+    if(!row) return;
+    row.classList.add('row-error');
+    row.querySelector('[data-role="after"]').textContent = 'could not read file';
+  }
+
+  function markTooLarge(item){
+    item.status = 'toolarge';
+    const row = item.rowEl;
+    if(!row) return;
+    row.classList.add('row-toolarge');
+    row.querySelector('[data-role="after"]').textContent = 'too large — max 20 MB';
+  }
+
+  function updateRow(item){
+    const row = item.rowEl;
+    if(!row) return;
+    row.querySelector('[data-role="after"]').textContent = formatBytes(item.compressedSize);
+
+    const pct = Math.round((1 - item.compressedSize / item.originalSize) * 100);
+    const badge = row.querySelector('[data-role="badge"]');
+    if(pct > 0){
+      badge.textContent = '-' + pct + '%';
+      badge.classList.remove('badge-neutral');
+    } else {
+      badge.textContent = 'no gain';
+      badge.classList.add('badge-neutral');
+    }
+
+    const fill = row.querySelector('[data-role="fill"]');
+    const ratio = Math.min(100, Math.max(2, (item.compressedSize / item.originalSize) * 100));
+    fill.style.width = ratio + '%';
+
+    row.querySelector('[data-role="download"]').disabled = false;
+  }
+
+  function recompressAll(){
+    items.forEach(function(item){
+      if(item.status !== 'error' && item.status !== 'toolarge'){
+        item.status = 'processing';
+        compressItem(item);
+      }
+    });
+  }
+
+  /* ---------- downloads ---------- */
+
+  function downloadItem(item){
+    if(!item.url) return;
+    const a = document.createElement('a');
+    a.href = item.url;
+    a.download = item.compressedName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function downloadAll(){
+    const ready = items.filter(function(i){ return i.status === 'done'; });
+    if(ready.length === 0) return;
+    downloadAllBtn.disabled = true;
+    const originalLabel = downloadAllBtn.textContent;
+    downloadAllBtn.textContent = 'Zipping…';
+    ensureJSZip().then(function(JSZipLib){
+      const zip = new JSZipLib();
+      ready.forEach(function(item){ zip.file(item.compressedName, item.compressedBlob); });
+      return zip.generateAsync({ type: 'blob' });
+    }).then(function(blob){
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'compressed-images.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    }).catch(function(){
+      showNotice('Could not build the zip — check your connection and try again');
+    }).finally(function(){
+      downloadAllBtn.textContent = originalLabel;
+      updateGlobalButtons();
+    });
+  }
+
+  function clearAll(){
+    items.forEach(function(item){ if(item.url) URL.revokeObjectURL(item.url); });
+    items = [];
+    list.innerHTML = '';
+    emptyState.hidden = false;
+    updateGlobalButtons();
+  }
+
+  function updateGlobalButtons(){
+    const hasItems = items.length > 0;
+    const hasDone = items.some(function(i){ return i.status === 'done'; });
+    clearAllBtn.disabled = !hasItems;
+    downloadAllBtn.disabled = !hasDone;
+  }
+
+  /* ---------- events ---------- */
+
+  dropzone.addEventListener('click', function(){ fileInput.click(); });
+  dropzone.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+  ['dragenter', 'dragover'].forEach(function(evt){
+    dropzone.addEventListener(evt, function(e){
+      e.preventDefault();
+      dropzone.classList.add('dropzone-active');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function(evt){
+    dropzone.addEventListener(evt, function(e){
+      e.preventDefault();
+      dropzone.classList.remove('dropzone-active');
+    });
+  });
+  dropzone.addEventListener('drop', function(e){
+    if(e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+  });
+
+  fileInput.addEventListener('change', function(){
+    addFiles(fileInput.files);
+    fileInput.value = '';
+  });
+
+  downloadAllBtn.addEventListener('click', downloadAll);
+  clearAllBtn.addEventListener('click', clearAll);
+
+  updateQualityLabel();
+})();
+</script>
+</body>
+</html>
