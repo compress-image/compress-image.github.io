@@ -2,29 +2,37 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' blob: data:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Image Compressor — Compress JPG, PNG, WEBP Online for Free</title>
-<meta name="description" content="Free online image compressor. Compress and convert JPG, JPEG, PNG, WEBP, GIF and BMP images — or a whole ZIP archive — directly in your browser. No upload, no signup, no watermark. Keeps the original filename with a -compress tag.">
-<meta name="theme-color" content="#EEEFE9">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 10V4H10' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M22 4H28V10' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M28 22V28H22' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10 28H4V22' stroke='%23C1622B' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='11.5' y='11.5' width='9' height='9' rx='1.5' fill='%232F7A5C'/%3E%3C/svg%3E">
-<meta name="keywords" content="image compressor, compress image, compress images online, image optimizer, reduce image size, shrink image, compress jpg, compress jpeg, compress png, compress webp, compress gif, convert png to jpg, convert image, image converter, bulk image compressor, batch compress images, zip image compressor, free image compressor, online image compressor, compress photo, photo compressor, optimize images for web, lossy compression, image size reducer, no upload image compressor, offline image compressor, privacy image compressor">
+<meta name="description" content="Free online image compressor. Compress, resize and convert JPG, PNG, WEBP, AVIF, GIF and BMP images — or a whole ZIP archive — directly in your browser. No upload, no signup, no watermark. Smart PNG quantization, WebP conversion, target file size, EXIF removal. Works offline.">
+<meta name="theme-color" content="#EEEFE9" id="metaTheme">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="keywords" content="image compressor, compress image, compress images online, image optimizer, reduce image size, shrink image, compress jpg, compress jpeg, compress png, compress webp, compress to 100kb, compress to 200kb, resize image, convert png to jpg, convert to webp, image converter, bulk image compressor, batch compress images, zip image compressor, free image compressor, online image compressor, compress photo, remove exif, optimize images for web, no upload image compressor, offline image compressor, сжать фото, сжать картинку, сжатие изображений онлайн">
 <link rel="canonical" href="https://compress-image.github.io/">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="googlebot" content="index, follow">
-<meta name="yandex" content="index, follow">
 <meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="application-name" content="Image Compressor">
-<meta name="apple-mobile-web-app-title" content="Image Compressor">
+<meta name="apple-mobile-web-app-title" content="Compressor">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Image Compressor">
 <meta property="og:url" content="https://compress-image.github.io/">
 <meta property="og:title" content="Image Compressor — Compress JPG, PNG, WEBP Online for Free">
-<meta property="og:description" content="Compress and convert images right in your browser. Nothing is uploaded, nothing is stored. Supports JPG, PNG, WEBP, GIF, BMP and ZIP archives.">
+<meta property="og:description" content="Compress, resize and convert images right in your browser. Nothing is uploaded, nothing is stored. JPG, PNG, WEBP, AVIF, GIF, BMP and ZIP archives.">
+<meta property="og:image" content="https://compress-image.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Image Compressor — shrink images without leaving the browser">
 <meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Image Compressor — Compress JPG, PNG, WEBP Online for Free">
-<meta name="twitter:description" content="Compress and convert images locally in your browser. No upload, no signup, no watermark.">
+<meta name="twitter:description" content="Compress, resize and convert images locally in your browser. No upload, no signup, no watermark.">
+<meta name="twitter:image" content="https://compress-image.github.io/og-image.png">
 <!-- Search engine verification: paste your own codes here if you register the site -->
 <!-- <meta name="google-site-verification" content="YOUR_GOOGLE_CODE"> -->
 <!-- <meta name="yandex-verification" content="YOUR_YANDEX_CODE"> -->
@@ -34,43 +42,125 @@
   "@type": "WebApplication",
   "name": "Image Compressor",
   "url": "https://compress-image.github.io/",
+  "image": "https://compress-image.github.io/og-image.png",
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Any (runs in a web browser)",
   "browserRequirements": "Requires JavaScript",
-  "description": "Free browser-based image compressor and converter for JPG, PNG, WEBP, GIF and BMP images, with ZIP archive support. All processing happens locally on the user's device.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
+  "description": "Free browser-based image compressor, resizer and converter for JPG, PNG, WEBP, AVIF, GIF and BMP images, with ZIP archive support. All processing happens locally on the user's device.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "featureList": [
-    "Compress JPG, PNG, WEBP, GIF and BMP",
+    "Compress JPG, PNG, WEBP, AVIF, GIF and BMP",
+    "Lossy PNG compression with palette quantization",
+    "Convert to WebP, JPEG or PNG",
+    "Resize to a maximum width or height",
+    "Compress to a target file size",
+    "Strip EXIF and GPS metadata",
+    "Before / after comparison slider",
     "Extract and compress images from ZIP archives",
-    "Adjustable quality presets and slider",
-    "Convert PNG to JPEG",
     "Batch download as ZIP",
-    "Light and dark theme",
+    "Works offline as an installable app",
     "Fully client-side, no uploads"
   ],
+  "inLanguage": ["en", "ru"],
   "isAccessibleForFree": true,
   "license": "https://opensource.org/licenses/MIT",
   "codeRepository": "https://github.com/compress-image/compress-image.github.io"
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Are my images uploaded anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. Compression runs inside your browser using the Canvas API and a Web Worker. Files never leave your device, and the page's Content-Security-Policy forbids it from sending data anywhere. After the first visit it even works offline." } },
+    { "@type": "Question", "name": "Which formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "Input: JPG, PNG, WEBP, AVIF, GIF, BMP (and HEIC in Safari), plus ZIP archives of them. Output: JPEG, WebP, PNG, and AVIF where the browser can encode it." } },
+    { "@type": "Question", "name": "How are PNG files compressed?", "acceptedAnswer": { "@type": "Answer", "text": "PNG is lossless, so the tool reduces the palette to 256 colors or fewer (like TinyPNG and pngquant) with gentle dithering, keeping transparency intact. That typically makes PNGs 50-80% smaller." } },
+    { "@type": "Question", "name": "Is EXIF and GPS metadata removed?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Re-encoding drops all metadata such as location, camera model and capture date, while photo orientation is preserved." } },
+    { "@type": "Question", "name": "How do I compress an image to a specific size, like 200 KB?", "acceptedAnswer": { "@type": "Answer", "text": "Enter the size in the Target size field. The tool finds the highest quality that fits and, if needed, slightly reduces the dimensions. Works for JPEG and WebP output." } }
+  ]
+}
+</script>
+<script>
+  (function(){
+    var t = null;
+    try{ t = localStorage.getItem('ic-theme'); }catch(e){}
+    if(t !== 'light' && t !== 'dark'){
+      t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<link rel="preload" href="fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  @font-face{
+    font-family:'Space Grotesk';
+    font-style:normal;
+    font-weight:300 700;
+    font-display:swap;
+    src:url(fonts/space-grotesk-latin-wght-normal.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face{
+    font-family:'IBM Plex Mono';
+    font-style:normal;
+    font-weight:400;
+    font-display:swap;
+    src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face{
+    font-family:'IBM Plex Mono';
+    font-style:normal;
+    font-weight:400;
+    font-display:swap;
+    src:url(fonts/ibm-plex-mono-cyrillic-400-normal.woff2) format('woff2');
+    unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+  }
+  @font-face{
+    font-family:'IBM Plex Mono';
+    font-style:normal;
+    font-weight:500;
+    font-display:swap;
+    src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face{
+    font-family:'IBM Plex Mono';
+    font-style:normal;
+    font-weight:500;
+    font-display:swap;
+    src:url(fonts/ibm-plex-mono-cyrillic-500-normal.woff2) format('woff2');
+    unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+  }
+  @font-face{
+    font-family:'IBM Plex Mono';
+    font-style:normal;
+    font-weight:600;
+    font-display:swap;
+    src:url(fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face{
+    font-family:'IBM Plex Mono';
+    font-style:normal;
+    font-weight:600;
+    font-display:swap;
+    src:url(fonts/ibm-plex-mono-cyrillic-600-normal.woff2) format('woff2');
+    unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+  }
+
   :root{
     --bg:#EEEFE9;
     --surface:#FFFFFF;
     --ink:#1C1E1B;
-    --ink-dim:#6B6F66;
+    --ink-dim:#62665D;
     --line:#D8D9D0;
-    --before:#C1622B;
+    --before:#B4561F;
     --before-soft:#F3DDCB;
-    --after:#2F7A5C;
+    --after:#2B7356;
     --after-soft:#D9EAE1;
+    --check:#E6E7E0;
+    color-scheme:light;
   }
 
   [data-theme="dark"]{
@@ -83,6 +173,8 @@
     --before-soft:#3A2A1E;
     --after:#4FAE86;
     --after-soft:#1C332A;
+    --check:#262A30;
+    color-scheme:dark;
   }
 
   *{ box-sizing:border-box; }
@@ -102,8 +194,15 @@
   }
 
   .wrap{
-    max-width:720px;
+    max-width:760px;
     margin:0 auto;
+  }
+
+  code{ font-family:inherit; color:var(--ink); white-space:nowrap; }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
   }
 
   /* ---------- topbar ---------- */
@@ -138,7 +237,7 @@
   }
 
   .icon-btn{
-    width:30px;
+    min-width:30px;
     height:30px;
     display:flex;
     align-items:center;
@@ -148,9 +247,15 @@
     color:var(--ink-dim);
     cursor:pointer;
     text-decoration:none;
+    font-family:inherit;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    padding:0 8px;
   }
   .icon-btn:hover{ border-color:var(--ink); color:var(--ink); }
   .icon-btn svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .icon-btn[hidden]{ display:none; }
 
   .icon-moon{ display:block; }
   .icon-sun{ display:none; }
@@ -181,12 +286,15 @@
     display:inline-block;
   }
 
-  h1{
+  h1, h2{
     font-family:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
     font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  h1{
     font-size:clamp(28px, 4.4vw, 40px);
     line-height:1.12;
-    letter-spacing:-0.01em;
     margin:0 0 16px;
   }
 
@@ -194,7 +302,7 @@
     font-size:14px;
     line-height:1.6;
     color:var(--ink-dim);
-    max-width:46ch;
+    max-width:52ch;
     margin:0 auto 40px;
   }
 
@@ -208,7 +316,9 @@
     text-align:center;
     cursor:pointer;
     outline-offset:4px;
+    transition:background .15s ease, border-color .15s ease;
   }
+  .dropzone:hover{ border-color:var(--ink-dim); }
 
   .dropzone.dropzone-active{
     background:var(--after-soft);
@@ -230,10 +340,10 @@
     margin:0 0 8px;
   }
 
-  .dropzone-sub{ font-size:12.5px; color:var(--ink-dim); margin:0; }
+  .dropzone-sub{ font-size:12.5px; line-height:1.6; color:var(--ink-dim); margin:0; }
 
   .notice{
-    margin-top:14px;
+    margin:14px 0 0;
     font-size:12px;
     color:var(--before);
     text-align:center;
@@ -243,16 +353,15 @@
 
   .controls{
     display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:24px;
-    margin:28px 0 8px;
-    padding:18px 20px;
+    flex-direction:column;
+    gap:20px;
+    margin:28px 0 20px;
+    padding:18px 20px 20px;
     background:var(--surface);
     border:1px solid var(--line);
   }
 
-  .quality-row{ display:flex; flex-direction:column; gap:10px; flex:1 1 320px; }
+  .quality-row{ display:flex; flex-direction:column; gap:10px; }
 
   .quality-head{
     display:flex;
@@ -262,14 +371,14 @@
     flex-wrap:wrap;
   }
 
-  .quality-head > label{
+  .field-label{
     font-size:11px;
     letter-spacing:.12em;
     text-transform:uppercase;
     color:var(--ink-dim);
   }
 
-  .quality-chips{ display:flex; gap:6px; }
+  .quality-chips{ display:flex; gap:6px; flex-wrap:wrap; }
 
   .chip{
     font-family:'IBM Plex Mono', monospace;
@@ -286,23 +395,68 @@
 
   .quality-slider-row{ display:flex; align-items:center; gap:14px; }
 
-  input[type="range"]{ flex:1; accent-color:var(--ink); height:2px; }
+  input[type="range"]{ flex:1; accent-color:var(--ink); min-width:0; }
 
-  .quality-value{ font-size:13.5px; font-weight:600; min-width:98px; text-align:right; white-space:nowrap; }
+  .quality-value{ font-size:13.5px; font-weight:600; min-width:110px; text-align:right; white-space:nowrap; }
 
-  .control-toggle{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:12.5px;
-    color:var(--ink-dim);
-    cursor:pointer;
+  .fields{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:16px;
   }
-  .control-toggle input{ accent-color:var(--ink); width:14px; height:14px; }
+
+  .field{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+
+  .select-wrap, .num-wrap{ position:relative; }
+  .select-wrap::after{
+    content:'';
+    position:absolute;
+    right:12px;
+    top:50%;
+    width:6px;
+    height:6px;
+    border-right:1.5px solid var(--ink-dim);
+    border-bottom:1.5px solid var(--ink-dim);
+    transform:translateY(-70%) rotate(45deg);
+    pointer-events:none;
+  }
+
+  .field select, .field input{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    font-family:inherit;
+    font-size:12.5px;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:0;
+    padding:8px 30px 8px 10px;
+    margin:0;
+  }
+  .field select{ cursor:pointer; }
+  .field select:hover, .field input:hover{ border-color:var(--ink-dim); }
+  .field input::-webkit-outer-spin-button,
+  .field input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .field input[type="number"]{ -moz-appearance:textfield; }
+  .field input::placeholder{ color:var(--ink-dim); opacity:.8; }
+
+  .num-suffix{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:11px;
+    color:var(--ink-dim);
+    pointer-events:none;
+  }
+
+  .field-hint{ font-size:10.5px; line-height:1.45; color:var(--ink-dim); margin:0; }
 
   /* ---------- list ---------- */
 
-  .list{ margin-top:2px; }
+  .list{ border-top:1px solid var(--line); }
+  .list:empty{ border-top:none; }
 
   .empty-state{
     font-size:13px;
@@ -310,22 +464,49 @@
     text-align:center;
     padding:28px 20px;
     border:1px dashed var(--line);
-    border-top:none;
+    margin:0;
   }
 
   .row{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
     background:var(--surface);
     border:1px solid var(--line);
     border-top:none;
-    padding:14px 20px 16px;
+    padding:12px 16px 14px 12px;
   }
 
-  .row-main{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .row-thumb{
+    flex:none;
+    width:46px;
+    height:46px;
+    padding:0;
+    border:1px solid var(--line);
+    background-color:var(--surface);
+    background-image:
+      linear-gradient(45deg, var(--check) 25%, transparent 25%, transparent 75%, var(--check) 75%),
+      linear-gradient(45deg, var(--check) 25%, transparent 25%, transparent 75%, var(--check) 75%);
+    background-size:10px 10px;
+    background-position:0 0, 5px 5px;
+    cursor:zoom-in;
+    overflow:hidden;
+    position:relative;
+  }
+  .row-thumb:disabled{ cursor:default; }
+  .row-thumb:hover:not(:disabled){ border-color:var(--ink); }
+  .row-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .row-thumb img:not([src]){ visibility:hidden; }
+
+  .row-body{ flex:1; min-width:0; }
+
+  .row-main{ display:flex; align-items:center; gap:8px 10px; flex-wrap:wrap; }
 
   .row-name{
     font-size:13px;
     font-weight:500;
-    max-width:220px;
+    min-width:0;
+    max-width:240px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
@@ -340,6 +521,7 @@
     font-size:12.5px;
     color:var(--ink-dim);
     margin-left:auto;
+    white-space:nowrap;
   }
 
   .size-before{ color:var(--before); }
@@ -352,10 +534,13 @@
     padding:3px 8px;
     border:1px solid var(--after);
     color:var(--after);
+    white-space:nowrap;
   }
   .row-badge.badge-neutral{ border-color:var(--line); color:var(--ink-dim); }
 
-  .row-download{
+  .row-btns{ display:flex; gap:6px; }
+
+  .row-btn{
     width:28px;
     height:28px;
     border:1px solid var(--ink);
@@ -368,19 +553,47 @@
     align-items:center;
     justify-content:center;
     padding:0;
+    font-family:inherit;
   }
-  .row-download:hover:not(:disabled){ background:var(--ink); color:var(--surface); }
-  .row-download:disabled{ opacity:.35; cursor:default; }
+  .row-btn:hover:not(:disabled){ background:var(--ink); color:var(--surface); }
+  .row-btn:disabled{ opacity:.35; cursor:default; }
+  .row-btn.row-remove{ border-color:var(--line); color:var(--ink-dim); }
+  .row-btn.row-remove:hover{ border-color:var(--before); background:var(--before); color:var(--surface); }
 
-  .row.row-error .size-after,
-  .row.row-toolarge .size-after{ color:var(--before); }
+  .row.row-error .size-after{ color:var(--before); font-weight:500; }
 
   .bar{ margin-top:10px; height:4px; background:var(--before-soft); overflow:hidden; }
   .bar-fill{ height:100%; background:var(--after); width:100%; transition:width .25s ease; }
+  .row-busy .bar-fill{
+    width:100% !important;
+    background:repeating-linear-gradient(90deg, var(--after-soft) 0 12px, var(--after) 12px 24px);
+    background-size:48px 100%;
+    animation:busy .8s linear infinite;
+  }
+  .row-error .bar-fill{ width:0 !important; }
+  @keyframes busy{ from{ background-position:0 0; } to{ background-position:48px 0; } }
+
+  .row-meta{ margin-top:7px; font-size:10.5px; color:var(--ink-dim); line-height:1.5; }
+  .row-meta:empty{ display:none; }
+  .row-meta .warn{ color:var(--before); }
 
   /* ---------- actions ---------- */
 
-  .actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:16px; }
+  .actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:16px;
+    flex-wrap:wrap;
+  }
+
+  .summary{
+    margin-right:auto;
+    font-size:12.5px;
+    color:var(--ink-dim);
+  }
+  .summary strong{ color:var(--after); font-weight:600; }
 
   button.action-btn{
     font-family:'IBM Plex Mono', monospace;
@@ -399,23 +612,146 @@
   button.action-btn.primary:hover:not(:disabled){ opacity:.85; }
   button.action-btn.primary:disabled{ background:var(--ink); opacity:.25; }
 
+  /* ---------- faq ---------- */
+
+  .faq{ margin-top:72px; }
+  .faq h2{ font-size:22px; margin:0 0 12px; }
+  .faq details{ border-bottom:1px solid var(--line); }
+  .faq summary{
+    cursor:pointer;
+    padding:15px 28px 15px 0;
+    font-size:13.5px;
+    font-weight:500;
+    list-style:none;
+    position:relative;
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::after{
+    content:'+';
+    position:absolute;
+    right:4px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--ink-dim);
+    font-size:16px;
+  }
+  .faq details[open] summary::after{ content:'−'; }
+  .faq p{ margin:0 0 16px; font-size:13px; line-height:1.7; color:var(--ink-dim); }
+
   footer{
     margin-top:56px;
     font-size:11.5px;
+    line-height:1.7;
     color:var(--ink-dim);
     text-align:center;
   }
   footer a{ color:var(--ink-dim); }
   footer a:hover{ color:var(--ink); }
 
+  /* ---------- compare dialog ---------- */
+
+  .compare{
+    width:min(960px, 94vw);
+    max-width:none;
+    max-height:94vh;
+    padding:16px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink);
+  }
+  .compare::backdrop{ background:rgba(10, 12, 10, .72); }
+
+  .compare-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  .compare-title{
+    font-size:13px;
+    font-weight:500;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .compare-stage{
+    position:relative;
+    margin:0 auto;
+    max-width:100%;
+    overflow:hidden;
+    background-color:var(--surface);
+    background-image:
+      linear-gradient(45deg, var(--check) 25%, transparent 25%, transparent 75%, var(--check) 75%),
+      linear-gradient(45deg, var(--check) 25%, transparent 25%, transparent 75%, var(--check) 75%);
+    background-size:16px 16px;
+    background-position:0 0, 8px 8px;
+    cursor:ew-resize;
+    touch-action:none;
+    user-select:none;
+    -webkit-user-select:none;
+  }
+  .compare-stage img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    pointer-events:none;
+  }
+  .compare-line{
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:2px;
+    margin-left:-1px;
+    background:#fff;
+    box-shadow:0 0 0 1px rgba(0,0,0,.35);
+    pointer-events:none;
+  }
+  .compare-line::after{
+    content:'';
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:26px;
+    height:26px;
+    transform:translate(-50%, -50%);
+    border:2px solid #fff;
+    background:rgba(0,0,0,.45);
+    border-radius:50%;
+  }
+  .compare-label{
+    position:absolute;
+    top:10px;
+    padding:4px 8px;
+    font-size:11px;
+    background:rgba(0,0,0,.62);
+    color:#fff;
+    pointer-events:none;
+  }
+  .compare-label.left{ left:10px; }
+  .compare-label.right{ right:10px; }
+  .compare-range{ width:100%; margin-top:12px; }
+
   :focus-visible{ outline:2px solid var(--ink); outline-offset:2px; }
+
+  @media (max-width:640px){
+    .fields{ grid-template-columns:1fr; gap:14px; }
+  }
 
   @media (max-width:480px){
     body{ padding:24px 14px 60px; }
+    .topbar{ margin-bottom:32px; }
+    .dropzone{ padding:44px 16px; }
+    .row{ padding:12px 12px 14px 10px; gap:10px; }
     .row-sizes{ margin-left:0; }
-    .row-name{ max-width:100%; }
-    .controls{ gap:18px; }
+    .row-name{ max-width:100%; flex-basis:100%; }
+    .row-btns{ margin-left:auto; }
+    .controls{ padding:16px; }
     .brand-text{ display:none; }
+    .summary{ flex-basis:100%; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -426,7 +762,7 @@
 <body>
   <div class="wrap">
 
-    <div class="topbar">
+    <header class="topbar">
       <div class="brand">
         <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
           <path d="M4 10V4H10"/>
@@ -438,92 +774,399 @@
         <span class="brand-text">image-compressor</span>
       </div>
       <div class="topbar-actions">
-        <a class="icon-btn" href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">
+        <button class="icon-btn" id="installBtn" type="button" hidden data-i18n="install">Install</button>
+        <button class="icon-btn" id="langToggle" type="button" data-i18n-aria="langToggle" aria-label="Switch language">RU</button>
+        <a class="icon-btn" href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer" data-i18n-aria="source" aria-label="View source on GitHub">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4L4 12L8 20"/><path d="M16 4L20 12L16 20"/></svg>
         </a>
-        <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode">
+        <button class="icon-btn" id="themeToggle" type="button" data-i18n-aria="themeToggle" aria-label="Toggle dark mode">
           <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
           <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
         </button>
       </div>
-    </div>
+    </header>
 
-    <div class="hero">
-      <p class="eyebrow"><span class="mark"></span>Local image compression</p>
-      <h1>Shrink your images without leaving the browser.</h1>
-      <p class="sub">Everything is resized and re-encoded on your device — nothing is uploaded, nothing is stored. Downloads keep the original filename with a <code>-compress</code> tag added.</p>
-    </div>
+    <main>
+      <div class="hero">
+        <p class="eyebrow"><span class="mark"></span><span data-i18n="eyebrow">Local image compression</span></p>
+        <h1 data-i18n="h1">Shrink your images without leaving the browser.</h1>
+        <p class="sub" data-i18n-html="sub">Everything is resized and re-encoded on your device — nothing is uploaded. EXIF and GPS metadata is stripped, and downloads keep the original filename with a <code>-compress</code> tag.</p>
+      </div>
 
-    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose images to compress">
-      <span class="corner corner-tl"></span>
-      <span class="corner corner-tr"></span>
-      <span class="corner corner-bl"></span>
-      <span class="corner corner-br"></span>
-      <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-        <rect x="3" y="5" width="18" height="14" rx="1"></rect>
-        <circle cx="9" cy="11" r="2.2"></circle>
-        <path d="M21 16l-5.5-5-4 4-2-2L3 18"></path>
-      </svg>
-      <p class="dropzone-title">Drop images here</p>
-      <p class="dropzone-sub">or click to choose · JPG · PNG · WEBP · GIF · BMP · ZIP — up to 20 MB per file</p>
-      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,.zip,application/zip,application/x-zip-compressed" multiple hidden>
-    </div>
-    <p class="notice" id="notice" hidden></p>
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" data-i18n-aria="dropAria" aria-label="Choose images to compress">
+        <span class="corner corner-tl"></span>
+        <span class="corner corner-tr"></span>
+        <span class="corner corner-bl"></span>
+        <span class="corner corner-br"></span>
+        <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="1"></rect>
+          <circle cx="9" cy="11" r="2.2"></circle>
+          <path d="M21 16l-5.5-5-4 4-2-2L3 18"></path>
+        </svg>
+        <p class="dropzone-title" data-i18n="dropTitle">Drop images here</p>
+        <p class="dropzone-sub" data-i18n="dropSub">or click to choose · paste with Ctrl+V · JPG · PNG · WEBP · AVIF · GIF · BMP · ZIP — up to 50 MB per file</p>
+      </div>
+      <input type="file" id="fileInput" accept="image/*,.heic,.heif,.avif,.zip,application/zip,application/x-zip-compressed" multiple hidden>
+      <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
+      <noscript><p class="notice">This tool needs JavaScript — all processing happens in your browser.</p></noscript>
 
-    <div class="controls">
-      <div class="quality-row">
-        <div class="quality-head">
-          <label for="quality">Quality</label>
-          <div class="quality-chips" id="qualityChips">
-            <button type="button" class="chip" data-value="40">Low</button>
-            <button type="button" class="chip" data-value="65">Medium</button>
-            <button type="button" class="chip" data-value="80">High</button>
-            <button type="button" class="chip" data-value="95">Best</button>
+      <section class="controls" data-i18n-aria="settings" aria-label="Compression settings">
+        <div class="quality-row">
+          <div class="quality-head">
+            <label class="field-label" for="quality" data-i18n="quality">Quality</label>
+            <div class="quality-chips" id="qualityChips">
+              <button type="button" class="chip" data-value="40" data-i18n="tierLow">Low</button>
+              <button type="button" class="chip" data-value="65" data-i18n="tierMedium">Medium</button>
+              <button type="button" class="chip" data-value="80" data-i18n="tierHigh">High</button>
+              <button type="button" class="chip" data-value="95" data-i18n="tierBest">Best</button>
+            </div>
+          </div>
+          <div class="quality-slider-row">
+            <input type="range" id="quality" min="10" max="100" value="80" step="1">
+            <span class="quality-value" id="qualityValue">80% · High</span>
           </div>
         </div>
-        <div class="quality-slider-row">
-          <input type="range" id="quality" min="10" max="100" value="80" step="1">
-          <span class="quality-value" id="qualityValue">80% · High</span>
+
+        <div class="fields">
+          <div class="field">
+            <label class="field-label" for="format" data-i18n="format">Output format</label>
+            <div class="select-wrap">
+              <select id="format">
+                <option value="auto" data-i18n="fmtAuto">Same as original</option>
+                <option value="image/webp">WebP</option>
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/png">PNG</option>
+                <option value="image/avif" hidden>AVIF</option>
+              </select>
+            </div>
+            <p class="field-hint" data-i18n="formatHint">WebP is usually the smallest. JPEG and PNG work everywhere.</p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="maxDim" data-i18n="resize">Max width / height</label>
+            <div class="select-wrap">
+              <select id="maxDim">
+                <option value="0" data-i18n="resizeOff">Keep dimensions</option>
+                <option value="3840">3840 px · 4K</option>
+                <option value="2560">2560 px</option>
+                <option value="1920">1920 px · Full HD</option>
+                <option value="1600">1600 px</option>
+                <option value="1280">1280 px · HD</option>
+                <option value="1024">1024 px</option>
+                <option value="800">800 px</option>
+                <option value="640">640 px</option>
+              </select>
+            </div>
+            <p class="field-hint" data-i18n="resizeHint">Only shrinks, never enlarges. Aspect ratio is kept.</p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="targetKB" data-i18n="target">Target size</label>
+            <div class="num-wrap">
+              <input type="number" id="targetKB" min="5" max="50000" step="1" inputmode="numeric" data-i18n-ph="targetPh" placeholder="off">
+              <span class="num-suffix" data-i18n="kb">KB</span>
+            </div>
+            <p class="field-hint" data-i18n="targetHint">Finds the best quality that fits. JPEG and WebP only.</p>
+          </div>
         </div>
+      </section>
+
+      <div class="list" id="list" aria-live="polite"></div>
+      <p class="empty-state" id="emptyState" data-i18n="empty">No images yet — drop a few above (or a .zip of them) to see the size drop.</p>
+
+      <div class="actions">
+        <p class="summary" id="summary" aria-live="polite"></p>
+        <button class="action-btn" id="clearAll" disabled data-i18n="clearAll">Clear all</button>
+        <button class="action-btn primary" id="downloadAll" disabled>Download all</button>
       </div>
-      <label class="control-toggle">
-        <input type="checkbox" id="pngToJpeg">
-        Convert PNG → JPEG for smaller files (drops transparency)
-      </label>
-    </div>
 
-    <div class="list" id="list"></div>
-    <p class="empty-state" id="emptyState">No images yet — drop a few above (or a .zip of them) to see the size drop.</p>
+      <section class="faq" aria-labelledby="faqTitle">
+        <h2 id="faqTitle" data-i18n="faqTitle">Questions</h2>
+        <details>
+          <summary data-i18n="q1">Are my images uploaded anywhere?</summary>
+          <p data-i18n="a1">No. Compression runs inside your browser using the Canvas API and a Web Worker. Files never leave your device, and the page's Content-Security-Policy forbids it from sending data anywhere. After the first visit it even works offline — and you can install it as an app.</p>
+        </details>
+        <details>
+          <summary data-i18n="q2">Which formats are supported?</summary>
+          <p data-i18n="a2">Input: JPG, PNG, WEBP, AVIF, GIF, BMP (and HEIC in Safari), plus ZIP archives of them. Output: WebP, JPEG, PNG, and AVIF where the browser can encode it. GIFs become lossless PNGs, BMP and HEIC become JPEGs. GIF animation is not preserved.</p>
+        </details>
+        <details>
+          <summary data-i18n="q3">How are PNG files compressed?</summary>
+          <p data-i18n="a3">PNG is a lossless format, so re-saving it alone barely helps. Instead the palette is reduced to 256 colors or fewer (the same idea as TinyPNG and pngquant) with gentle dithering, keeping transparency intact. Images that already have few colors — logos, screenshots, GIFs — are packed losslessly. At 100% quality, photos stay lossless.</p>
+        </details>
+        <details>
+          <summary data-i18n="q4">Is EXIF and GPS metadata removed?</summary>
+          <p data-i18n="a4">Yes. Re-encoding drops all metadata — location, camera model, capture date. Photo orientation is applied first, so pictures don't end up sideways.</p>
+        </details>
+        <details>
+          <summary data-i18n="q5">How do I compress an image to a specific size, like 200 KB?</summary>
+          <p data-i18n="a5">Type the size into “Target size”. The tool searches for the highest quality that fits and, if even the lowest quality is too big, gradually reduces the dimensions. It works for JPEG and WebP output; choose one of them in “Output format” for PNG sources.</p>
+        </details>
+        <details>
+          <summary data-i18n="q6">Why does a file sometimes say “original”?</summary>
+          <p data-i18n="a6">If the original is already smaller than anything we could produce in the same format, you get the original back untouched. Compressing never makes a file bigger unless you asked for a different format or size.</p>
+        </details>
+        <details>
+          <summary data-i18n="q7">Are there any limits?</summary>
+          <p data-i18n="a7">Up to 50 MB per file and up to 1000 images per ZIP. Huge images are scaled down to what the browser can safely handle (iPhone and iPad are stricter, about 16 megapixels).</p>
+        </details>
+      </section>
+    </main>
 
-    <div class="actions">
-      <button class="action-btn" id="clearAll" disabled>Clear all</button>
-      <button class="action-btn primary" id="downloadAll" disabled>Download all</button>
-    </div>
-
-    <footer>Runs entirely client-side · no uploads, no analytics, no tracking · <a href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer">source on GitHub</a></footer>
+    <footer data-i18n-html="footer">Runs entirely client-side · no uploads, no analytics, no tracking · works offline · <a href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer">source on GitHub</a></footer>
   </div>
+
+  <dialog class="compare" id="compare" data-i18n-aria="compare" aria-label="Compare">
+    <div class="compare-head">
+      <span class="compare-title" id="compareTitle"></span>
+      <button class="icon-btn" type="button" id="compareClose" data-i18n-aria="close" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="compare-stage" id="compareStage">
+      <img id="compareBefore" alt="">
+      <img id="compareAfter" alt="">
+      <div class="compare-line" id="compareLine"></div>
+      <span class="compare-label left" id="compareLabelBefore"></span>
+      <span class="compare-label right" id="compareLabelAfter"></span>
+    </div>
+    <input type="range" class="compare-range" id="compareRange" min="0" max="100" value="50" step="0.5" data-i18n-aria="compareSlider" aria-label="Comparison position">
+  </dialog>
 
 <script>
 (function(){
   "use strict";
 
-  const dropzone = document.getElementById('dropzone');
-  const fileInput = document.getElementById('fileInput');
-  const list = document.getElementById('list');
-  const emptyState = document.getElementById('emptyState');
-  const notice = document.getElementById('notice');
-  const qualityInput = document.getElementById('quality');
-  const qualityValue = document.getElementById('qualityValue');
-  const qualityChips = document.getElementById('qualityChips');
-  const pngToggle = document.getElementById('pngToJpeg');
-  const downloadAllBtn = document.getElementById('downloadAll');
-  const clearAllBtn = document.getElementById('clearAll');
-  const themeToggle = document.getElementById('themeToggle');
+  /* ---------- i18n ---------- */
 
-  const EXT_MIME = { jpg:'image/jpeg', jpeg:'image/jpeg', png:'image/png', webp:'image/webp', gif:'image/gif', bmp:'image/bmp' };
-  const SUPPORTED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/bmp'];
-  const MAX_FILE_SIZE = 20 * 1024 * 1024;
-  const MAX_DIMENSION = 8000;
+  const STRINGS = {
+    en: {
+      install: 'Install',
+      langToggle: 'Переключить на русский',
+      source: 'View source on GitHub',
+      themeToggle: 'Toggle dark mode',
+      eyebrow: 'Local image compression',
+      h1: 'Shrink your images without leaving the browser.',
+      sub: 'Everything is resized and re-encoded on your device — nothing is uploaded. EXIF and GPS metadata is stripped, and downloads keep the original filename with a <code>-compress</code> tag.',
+      dropAria: 'Choose images to compress',
+      dropTitle: 'Drop images here',
+      dropSub: 'or click to choose · paste with Ctrl+V · JPG · PNG · WEBP · AVIF · GIF · BMP · ZIP — up to 50 MB per file',
+      settings: 'Compression settings',
+      quality: 'Quality',
+      tierLow: 'Low', tierMedium: 'Medium', tierHigh: 'High', tierBest: 'Best', tierLossless: 'Lossless',
+      format: 'Output format',
+      fmtAuto: 'Same as original',
+      formatHint: 'WebP is usually the smallest. JPEG and PNG work everywhere.',
+      resize: 'Max width / height',
+      resizeOff: 'Keep dimensions',
+      resizeHint: 'Only shrinks, never enlarges. Aspect ratio is kept.',
+      target: 'Target size',
+      targetPh: 'off',
+      targetHint: 'Finds the best quality that fits. JPEG and WebP only.',
+      b: 'B', kb: 'KB', mb: 'MB',
+      empty: 'No images yet — drop a few above (or a .zip of them) to see the size drop.',
+      clearAll: 'Clear all',
+      downloadAll: 'Download all',
+      zipping: 'Zipping…',
+      queued: 'waiting…',
+      processing: 'compressing…',
+      errRead: 'could not read file',
+      errUnsupported: 'this browser can’t open this format',
+      errTooLarge: 'too large — max 50 MB',
+      noGain: 'no gain',
+      original: 'original',
+      keptOriginal: 'already well optimized — original kept as is',
+      targetMissed: 'could not reach the target size',
+      targetPng: 'target size applies to JPEG/WebP only',
+      limited: 'scaled down to fit browser limits',
+      lossless: 'lossless',
+      colors: '{n} colors',
+      summary: '{files} · {before} → {after} · <strong>−{pct}%</strong>',
+      summaryNoGain: '{files} · {before} → {after}',
+      filesOne: '{n} image', filesMany: '{n} images',
+      skipped: '{n} skipped — unsupported format',
+      zipEmpty: 'No supported images found inside {name}',
+      zipBad: 'Could not read {name} as a zip',
+      zipFail: 'Could not build the zip — please try again',
+      zipLimit: 'Too many files in {name} — only the first {n} were added',
+      zipLoading: 'Unpacking {name}…',
+      compare: 'Compare before and after',
+      compareSlider: 'Comparison position',
+      close: 'Close',
+      before: 'Original',
+      after: 'Compressed',
+      download: 'Download {name}',
+      remove: 'Remove {name}',
+      faqTitle: 'Questions',
+      q1: 'Are my images uploaded anywhere?',
+      a1: 'No. Compression runs inside your browser using the Canvas API and a Web Worker. Files never leave your device, and the page’s Content-Security-Policy forbids it from sending data anywhere. After the first visit it even works offline — and you can install it as an app.',
+      q2: 'Which formats are supported?',
+      a2: 'Input: JPG, PNG, WEBP, AVIF, GIF, BMP (and HEIC in Safari), plus ZIP archives of them. Output: WebP, JPEG, PNG, and AVIF where the browser can encode it. GIFs become lossless PNGs, BMP and HEIC become JPEGs. GIF animation is not preserved.',
+      q3: 'How are PNG files compressed?',
+      a3: 'PNG is a lossless format, so re-saving it alone barely helps. Instead the palette is reduced to 256 colors or fewer (the same idea as TinyPNG and pngquant) with gentle dithering, keeping transparency intact. Images that already have few colors — logos, screenshots, GIFs — are packed losslessly. At 100% quality, photos stay lossless.',
+      q4: 'Is EXIF and GPS metadata removed?',
+      a4: 'Yes. Re-encoding drops all metadata — location, camera model, capture date. Photo orientation is applied first, so pictures don’t end up sideways.',
+      q5: 'How do I compress an image to a specific size, like 200 KB?',
+      a5: 'Type the size into “Target size”. The tool searches for the highest quality that fits and, if even the lowest quality is too big, gradually reduces the dimensions. It works for JPEG and WebP output; choose one of them in “Output format” for PNG sources.',
+      q6: 'Why does a file sometimes say “original”?',
+      a6: 'If the original is already smaller than anything we could produce in the same format, you get the original back untouched. Compressing never makes a file bigger unless you asked for a different format or size.',
+      q7: 'Are there any limits?',
+      a7: 'Up to 50 MB per file and up to 1000 images per ZIP. Huge images are scaled down to what the browser can safely handle (iPhone and iPad are stricter, about 16 megapixels).',
+      footer: 'Runs entirely client-side · no uploads, no analytics, no tracking · works offline · <a href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer">source on GitHub</a>'
+    },
+    ru: {
+      install: 'Установить',
+      langToggle: 'Switch to English',
+      source: 'Исходный код на GitHub',
+      themeToggle: 'Переключить тёмную тему',
+      eyebrow: 'Сжатие прямо в браузере',
+      h1: 'Уменьшайте картинки, не покидая браузер.',
+      sub: 'Всё сжимается на вашем устройстве — ничего не загружается на сервер. Метаданные EXIF и GPS удаляются, а имя файла сохраняется с пометкой <code>-compress</code>.',
+      dropAria: 'Выбрать изображения для сжатия',
+      dropTitle: 'Перетащите изображения сюда',
+      dropSub: 'или нажмите, чтобы выбрать · вставка через Ctrl+V · JPG · PNG · WEBP · AVIF · GIF · BMP · ZIP — до 50 МБ на файл',
+      settings: 'Настройки сжатия',
+      quality: 'Качество',
+      tierLow: 'Низкое', tierMedium: 'Среднее', tierHigh: 'Высокое', tierBest: 'Максимум', tierLossless: 'Без потерь',
+      format: 'Формат',
+      fmtAuto: 'Как у исходника',
+      formatHint: 'WebP обычно самый лёгкий. JPEG и PNG открываются везде.',
+      resize: 'Макс. ширина / высота',
+      resizeOff: 'Не менять размер',
+      resizeHint: 'Только уменьшает, пропорции сохраняются.',
+      target: 'Целевой вес',
+      targetPh: 'выкл',
+      targetHint: 'Подберёт лучшее качество, при котором файл влезет. Только JPEG и WebP.',
+      b: 'Б', kb: 'КБ', mb: 'МБ',
+      empty: 'Пока пусто — перетащите пару картинок (или .zip с ними), чтобы увидеть, насколько они похудеют.',
+      clearAll: 'Очистить',
+      downloadAll: 'Скачать всё',
+      zipping: 'Упаковываю…',
+      queued: 'в очереди…',
+      processing: 'сжимаю…',
+      errRead: 'не удалось прочитать файл',
+      errUnsupported: 'браузер не умеет открывать этот формат',
+      errTooLarge: 'слишком большой — максимум 50 МБ',
+      noGain: 'без выигрыша',
+      original: 'оригинал',
+      keptOriginal: 'уже хорошо сжат — оставлен оригинал',
+      targetMissed: 'не удалось уложиться в целевой вес',
+      targetPng: 'целевой вес работает только для JPEG/WebP',
+      limited: 'уменьшено до лимита браузера',
+      lossless: 'без потерь',
+      colors: '{n} цв.',
+      summary: '{files} · {before} → {after} · <strong>−{pct}%</strong>',
+      summaryNoGain: '{files} · {before} → {after}',
+      filesOne: '{n} файл', filesFew: '{n} файла', filesMany: '{n} файлов',
+      skipped: 'Пропущено: {n} — неподдерживаемый формат',
+      zipEmpty: 'В {name} нет поддерживаемых изображений',
+      zipBad: 'Не удалось открыть {name} как zip',
+      zipFail: 'Не удалось собрать zip — попробуйте ещё раз',
+      zipLimit: 'В {name} слишком много файлов — добавлены первые {n}',
+      zipLoading: 'Распаковываю {name}…',
+      compare: 'Сравнить до и после',
+      compareSlider: 'Положение шторки',
+      close: 'Закрыть',
+      before: 'Оригинал',
+      after: 'Сжатый',
+      download: 'Скачать {name}',
+      remove: 'Удалить {name}',
+      faqTitle: 'Вопросы и ответы',
+      q1: 'Мои изображения куда-то загружаются?',
+      a1: 'Нет. Сжатие выполняется в вашем браузере через Canvas API и Web Worker. Файлы не покидают устройство, а Content-Security-Policy страницы запрещает ей отправлять данные куда-либо. После первого открытия сервис работает даже без интернета — его можно установить как приложение.',
+      q2: 'Какие форматы поддерживаются?',
+      a2: 'На входе: JPG, PNG, WEBP, AVIF, GIF, BMP (и HEIC в Safari), а также ZIP-архивы с ними. На выходе: WebP, JPEG, PNG и AVIF, если браузер умеет его кодировать. GIF превращается в PNG без потерь, BMP и HEIC — в JPEG. Анимация GIF не сохраняется.',
+      q3: 'Как сжимаются PNG?',
+      a3: 'PNG — формат без потерь, поэтому простое пересохранение почти ничего не даёт. Вместо этого палитра сокращается до 256 цветов и меньше (как в TinyPNG и pngquant) с мягким дизерингом, прозрачность сохраняется. Картинки с небольшим числом цветов — логотипы, скриншоты, GIF — упаковываются без потерь. При качестве 100% фотографии остаются без потерь.',
+      q4: 'Удаляются ли метаданные EXIF и GPS?',
+      a4: 'Да. При перекодировании отбрасываются все метаданные — геолокация, модель камеры, дата съёмки. Поворот фото применяется заранее, так что снимки не «ложатся на бок».',
+      q5: 'Как сжать картинку до определённого веса, например до 200 КБ?',
+      a5: 'Впишите вес в поле «Целевой вес». Сервис подберёт максимальное качество, при котором файл укладывается в лимит, а если не хватит даже минимального — постепенно уменьшит размеры. Работает для JPEG и WebP; для PNG-исходников выберите один из них в поле «Формат».',
+      q6: 'Почему у файла иногда написано «оригинал»?',
+      a6: 'Если исходник уже меньше всего, что можно получить в том же формате, вы получите его без изменений. Сжатие никогда не делает файл больше — если только вы сами не выбрали другой формат или размер.',
+      q7: 'Есть ли ограничения?',
+      a7: 'До 50 МБ на файл и до 1000 изображений в одном ZIP. Очень большие картинки уменьшаются до размера, с которым браузер справится (на iPhone и iPad лимит строже — около 16 мегапикселей).',
+      footer: 'Работает полностью в браузере · без загрузок, аналитики и слежки · работает офлайн · <a href="https://github.com/compress-image/compress-image.github.io" target="_blank" rel="noopener noreferrer">исходный код на GitHub</a>'
+    }
+  };
+
+  function storageGet(key){ try{ return localStorage.getItem(key); }catch(e){ return null; } }
+  function storageSet(key, value){ try{ localStorage.setItem(key, value); }catch(e){} }
+
+  let lang = storageGet('ic-lang');
+  if(lang !== 'en' && lang !== 'ru'){
+    lang = /^(ru|uk|be|kk)\b/i.test(navigator.language || '') ? 'ru' : 'en';
+  }
+
+  function t(key, vars){
+    let s = (STRINGS[lang] && STRINGS[lang][key]) || STRINGS.en[key] || key;
+    if(vars) s = s.replace(/\{(\w+)\}/g, function(m, k){ return k in vars ? vars[k] : m; });
+    return s;
+  }
+
+  function filesLabel(n){
+    if(lang === 'ru'){
+      const m10 = n % 10, m100 = n % 100;
+      if(m10 === 1 && m100 !== 11) return t('filesOne', { n: n });
+      if(m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return t('filesFew', { n: n });
+      return t('filesMany', { n: n });
+    }
+    return t(n === 1 ? 'filesOne' : 'filesMany', { n: n });
+  }
+
+  /* ---------- elements ---------- */
+
+  const $ = function(id){ return document.getElementById(id); };
+  const root = document.documentElement;
+  const dropzone = $('dropzone');
+  const fileInput = $('fileInput');
+  const list = $('list');
+  const emptyState = $('emptyState');
+  const notice = $('notice');
+  const qualityInput = $('quality');
+  const qualityValue = $('qualityValue');
+  const qualityChips = $('qualityChips');
+  const formatSelect = $('format');
+  const maxDimSelect = $('maxDim');
+  const targetInput = $('targetKB');
+  const summaryEl = $('summary');
+  const downloadAllBtn = $('downloadAll');
+  const clearAllBtn = $('clearAll');
+  const themeToggle = $('themeToggle');
+  const langToggle = $('langToggle');
+  const installBtn = $('installBtn');
+  const metaTheme = $('metaTheme');
+
+  /* ---------- constants & capabilities ---------- */
+
+  const EXT_MIME = {
+    jpg:'image/jpeg', jpeg:'image/jpeg', jfif:'image/jpeg', pjpeg:'image/jpeg',
+    png:'image/png', webp:'image/webp', avif:'image/avif',
+    gif:'image/gif', bmp:'image/bmp', heic:'image/heic', heif:'image/heif'
+  };
+  const MIME_EXT = { 'image/jpeg':'jpg', 'image/png':'png', 'image/webp':'webp', 'image/avif':'avif', 'image/gif':'gif', 'image/bmp':'bmp' };
+  const SUPPORTED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif', 'image/bmp', 'image/heic', 'image/heif'];
+  const MAX_FILE_SIZE = 50 * 1024 * 1024;
+  const MAX_ZIP_ENTRIES = 1000;
+  const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const MAX_AREA = IS_IOS ? 16000000 : 50000000;
+  const MAX_DIMENSION = IS_IOS ? 8192 : 16000;
+  const CONCURRENCY = Math.max(1, Math.min(3, (navigator.hardwareConcurrency || 2) - 1));
+  const HAS_COMPRESSION_STREAM = typeof CompressionStream === 'function';
+
+  function canEncode(type){
+    try{
+      const c = document.createElement('canvas');
+      c.width = c.height = 2;
+      return c.toDataURL(type).indexOf('data:' + type) === 0;
+    }catch(e){ return false; }
+  }
+  const CAN_WEBP = canEncode('image/webp');
+  const CAN_AVIF = canEncode('image/avif');
+
+  if(!CAN_WEBP) formatSelect.querySelector('option[value="image/webp"]').hidden = true;
+  if(CAN_AVIF) formatSelect.querySelector('option[value="image/avif"]').hidden = false;
+
+  /* ---------- state ---------- */
 
   let items = [];
   let uid = 0;
@@ -531,24 +1174,78 @@
   let noticeTimer = null;
   let jszipPromise = null;
 
+  const settings = { quality: 80, format: 'auto', maxDim: 0, targetKB: 0 };
+  (function loadSettings(){
+    try{
+      const saved = JSON.parse(storageGet('ic-settings') || 'null');
+      if(!saved) return;
+      if(saved.quality >= 10 && saved.quality <= 100) settings.quality = Math.round(saved.quality);
+      if(saved.format === 'auto' || (formatSelect.querySelector('option[value="' + saved.format + '"]:not([hidden])'))) settings.format = saved.format;
+      if(maxDimSelect.querySelector('option[value="' + Number(saved.maxDim) + '"]')) settings.maxDim = Number(saved.maxDim);
+      if(saved.targetKB > 0) settings.targetKB = Math.round(saved.targetKB);
+    }catch(e){}
+  })();
+  qualityInput.value = settings.quality;
+  formatSelect.value = settings.format;
+  maxDimSelect.value = String(settings.maxDim);
+  targetInput.value = settings.targetKB || '';
+
+  function saveSettings(){ storageSet('ic-settings', JSON.stringify(settings)); }
+
   /* ---------- theme ---------- */
 
-  const root = document.documentElement;
-  function systemPrefersDark(){
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function syncThemeColor(){
+    metaTheme.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#14161A' : '#EEEFE9');
   }
-  root.setAttribute('data-theme', systemPrefersDark() ? 'dark' : 'light');
+  syncThemeColor();
   themeToggle.addEventListener('click', function(){
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
+    storageSet('ic-theme', next);
+    syncThemeColor();
+  });
+  if(window.matchMedia){
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const onSystemChange = function(e){
+      if(storageGet('ic-theme')) return;
+      root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      syncThemeColor();
+    };
+    if(mq.addEventListener) mq.addEventListener('change', onSystemChange);
+    else if(mq.addListener) mq.addListener(onSystemChange);
+  }
+
+  /* ---------- language ---------- */
+
+  const DEFAULT_TITLE = document.title;
+
+  function applyLang(){
+    root.lang = lang;
+    document.title = lang === 'ru' ? 'Сжать изображение онлайн — JPG, PNG, WEBP бесплатно и без загрузки' : DEFAULT_TITLE;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){ el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){ el.innerHTML = t(el.dataset.i18nHtml); });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el){ el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function(el){ el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
+    langToggle.textContent = lang === 'ru' ? 'EN' : 'RU';
+    updateQualityLabel();
+    items.forEach(function(item){ refreshRowLabels(item); updateRow(item); });
+    updateGlobal();
+  }
+
+  langToggle.addEventListener('click', function(){
+    lang = lang === 'ru' ? 'en' : 'ru';
+    storageSet('ic-lang', lang);
+    applyLang();
   });
 
   /* ---------- helpers ---------- */
 
   function formatBytes(bytes){
-    if(bytes < 1024) return bytes + ' B';
-    if(bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    let s;
+    if(bytes < 1024) s = bytes + ' ' + t('b');
+    else if(bytes < 1024 * 1024) s = (bytes / 1024).toFixed(bytes < 10240 ? 1 : 0) + ' ' + t('kb');
+    else s = (bytes / (1024 * 1024)).toFixed(2) + ' ' + t('mb');
+    return lang === 'ru' ? s.replace('.', ',') : s;
   }
 
   function splitName(filename){
@@ -557,21 +1254,18 @@
     return { base: filename.slice(0, dot), ext: filename.slice(dot + 1) };
   }
 
-  function buildCompressedName(originalName, forcedExt){
-    const { base, ext } = splitName(originalName);
-    const finalExt = forcedExt || ext || 'jpg';
-    return base + '-compress.' + finalExt;
-  }
-
   function escapeHtml(s){
-    return s.replace(/[&<>"']/g, function(c){
+    return String(s).replace(/[&<>"']/g, function(c){
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
 
+  function extOf(name){ return (name.split('.').pop() || '').toLowerCase(); }
+
   function detectImageMime(file){
+    const ext = extOf(file.name);
+    if(file.type === 'image/jpg' || file.type === 'image/pjpeg') return 'image/jpeg';
     if(SUPPORTED_TYPES.indexOf(file.type) !== -1) return file.type;
-    const ext = (file.name.split('.').pop() || '').toLowerCase();
     return EXT_MIME[ext] || null;
   }
 
@@ -581,11 +1275,11 @@
       /\.zip$/i.test(file.name);
   }
 
-  function showNotice(msg){
+  function showNotice(msg, persist){
     notice.textContent = msg;
     notice.hidden = false;
     clearTimeout(noticeTimer);
-    noticeTimer = setTimeout(function(){ notice.hidden = true; }, 5000);
+    if(!persist) noticeTimer = setTimeout(function(){ notice.hidden = true; }, 6000);
   }
 
   function ensureJSZip(){
@@ -593,7 +1287,7 @@
     if(jszipPromise) return jszipPromise;
     jszipPromise = new Promise(function(resolve, reject){
       const s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+      s.src = 'vendor/jszip.min.js';
       s.onload = function(){ resolve(window.JSZip); };
       s.onerror = function(){ jszipPromise = null; reject(new Error('load failed')); };
       document.head.appendChild(s);
@@ -601,23 +1295,386 @@
     return jszipPromise;
   }
 
+  function triggerDownload(url, name){
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  /* ---------- PNG quantizer (runs in a Web Worker) ----------
+     Self-contained: it is serialized with toString() into the worker,
+     so it must not reference anything outside its own body. */
+
+  function quantEngine(){
+    var CRC = new Uint32Array(256);
+    for(var n = 0; n < 256; n++){
+      var c = n;
+      for(var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      CRC[n] = c >>> 0;
+    }
+    function crc32(buf, start, end){
+      var c = 0xFFFFFFFF;
+      for(var i = start; i < end; i++) c = CRC[(c ^ buf[i]) & 255] ^ (c >>> 8);
+      return (c ^ 0xFFFFFFFF) >>> 0;
+    }
+
+    function zlib(bytes){
+      var cs = new CompressionStream('deflate');
+      var writer = cs.writable.getWriter();
+      writer.write(bytes).catch(function(){});
+      writer.close().catch(function(){});
+      return new Response(cs.readable).arrayBuffer().then(function(b){ return new Uint8Array(b); });
+    }
+
+    // Colors are packed as little-endian RGBA in a Uint32: (a<<24)|(b<<16)|(g<<8)|r
+    function exactPalette(px, count){
+      var map = new Map(), colors = [], idx = new Uint8Array(count);
+      var last = -1, lastIdx = 0;
+      for(var i = 0; i < count; i++){
+        var c = px[i];
+        if((c >>> 24) === 0) c = 0;
+        if(c !== last){
+          var j = map.get(c);
+          if(j === undefined){
+            if(colors.length === 256) return null;
+            j = colors.length;
+            map.set(c, j);
+            colors.push(c);
+          }
+          last = c;
+          lastIdx = j;
+        }
+        idx[i] = lastIdx;
+      }
+      return { idx: idx, colors: colors };
+    }
+
+    function chv(key, ch){ return (key >>> (15 - 5 * ch)) & 31; }
+    function center(v, isAlpha){
+      if(isAlpha) return v === 0 ? 0 : v === 31 ? 255 : (v << 3) | 4;
+      return (v << 3) | 4;
+    }
+
+    // Median cut over a 5-bit-per-channel RGBA histogram.
+    function buildPalette(d, count, maxColors){
+      var hist = new Uint32Array(1 << 20), i, p;
+      for(i = 0, p = 0; i < count; i++, p += 4){
+        var a = d[p + 3];
+        hist[a === 0 ? 0 : ((d[p] >> 3) << 15) | ((d[p + 1] >> 3) << 10) | ((d[p + 2] >> 3) << 5) | (a >> 3)]++;
+      }
+      var m = 0;
+      for(i = 0; i < hist.length; i++) if(hist[i]) m++;
+      var keys = new Uint32Array(m), counts = new Uint32Array(m);
+      for(i = 0, p = 0; i < hist.length; i++) if(hist[i]){ keys[p] = i; counts[p] = hist[i]; p++; }
+      hist = null;
+
+      var W = [1.0, 1.2, 0.8, 1.4];
+      function stats(box){
+        var mn = [31, 31, 31, 31], mx = [0, 0, 0, 0], cnt = 0;
+        for(var j = box.lo; j < box.hi; j++){
+          var key = keys[j];
+          cnt += counts[j];
+          for(var ch = 0; ch < 4; ch++){
+            var v = chv(key, ch);
+            if(v < mn[ch]) mn[ch] = v;
+            if(v > mx[ch]) mx[ch] = v;
+          }
+        }
+        var best = 0, bestCh = 0;
+        for(ch = 0; ch < 4; ch++){
+          var r = (mx[ch] - mn[ch]) * W[ch];
+          if(r > best){ best = r; bestCh = ch; }
+        }
+        box.count = cnt;
+        box.ch = bestCh;
+        box.score = (box.hi - box.lo > 1 && best > 0) ? best * Math.sqrt(cnt) : 0;
+        return box;
+      }
+      function split(box){
+        var ch = box.ch, lo = box.lo, hi = box.hi, j, v;
+        var buckets = new Uint32Array(32);
+        for(j = lo; j < hi; j++) buckets[chv(keys[j], ch)]++;
+        var pos = new Uint32Array(32), acc = lo;
+        for(v = 0; v < 32; v++){ pos[v] = acc; acc += buckets[v]; }
+        var tk = keys.slice(lo, hi), tc = counts.slice(lo, hi);
+        for(j = 0; j < tk.length; j++){
+          var q = pos[chv(tk[j], ch)]++;
+          keys[q] = tk[j];
+          counts[q] = tc[j];
+        }
+        var half = box.count / 2, run = 0, s = lo + 1;
+        for(j = lo; j < hi; j++){
+          run += counts[j];
+          if(run >= half){ s = j + 1; break; }
+        }
+        if(s <= lo) s = lo + 1;
+        if(s >= hi) s = hi - 1;
+        return [stats({ lo: lo, hi: s }), stats({ lo: s, hi: hi })];
+      }
+
+      var boxes = [stats({ lo: 0, hi: m })];
+      while(boxes.length < maxColors){
+        var bi = -1, bs = 0;
+        for(i = 0; i < boxes.length; i++) if(boxes[i].score > bs){ bs = boxes[i].score; bi = i; }
+        if(bi < 0) break;
+        var parts = split(boxes[bi]);
+        boxes.splice(bi, 1, parts[0], parts[1]);
+      }
+
+      var K = boxes.length;
+      var P = { n: K, r: new Float64Array(K), g: new Float64Array(K), b: new Float64Array(K), a: new Float64Array(K) };
+      for(i = 0; i < K; i++){
+        var bx = boxes[i], sr = 0, sg = 0, sb = 0, sa = 0, tot = 0;
+        for(var j = bx.lo; j < bx.hi; j++){
+          var key = keys[j], w = counts[j];
+          sr += w * center(chv(key, 0)); sg += w * center(chv(key, 1));
+          sb += w * center(chv(key, 2)); sa += w * center(chv(key, 3), true);
+          tot += w;
+        }
+        P.r[i] = sr / tot; P.g[i] = sg / tot; P.b[i] = sb / tot; P.a[i] = sa / tot;
+      }
+      return P;
+    }
+
+    function roundPalette(P){
+      for(var k = 0; k < P.n; k++){
+        P.r[k] = Math.round(P.r[k]); P.g[k] = Math.round(P.g[k]);
+        P.b[k] = Math.round(P.b[k]); P.a[k] = Math.round(P.a[k]);
+        if(P.a[k] < 4){ P.r[k] = P.g[k] = P.b[k] = P.a[k] = 0; }
+        if(P.a[k] > 251) P.a[k] = 255;
+      }
+    }
+
+    function makeMatcher(P){
+      var K = P.n, pr = P.r, pg = P.g, pb = P.b, pa = P.a;
+      var cache = new Int16Array(1 << 22).fill(-1);
+      return function(r, g, b, a){
+        var key = ((r >> 2) << 16) | ((g >> 2) << 10) | ((b >> 2) << 4) | (a >> 4);
+        var v = cache[key];
+        if(v >= 0) return v;
+        var best = 0, bd = Infinity;
+        for(var k = 0; k < K; k++){
+          var dr = r - pr[k], dg = g - pg[k], db = b - pb[k], da = a - pa[k];
+          var dd = 2 * dr * dr + 4 * dg * dg + db * db + 3 * da * da;
+          if(dd < bd){ bd = dd; best = k; }
+        }
+        cache[key] = best;
+        return best;
+      };
+    }
+
+    // One k-means pass over (a sample of) the real pixels.
+    function refine(d, count, P){
+      var K = P.n, match = makeMatcher(P);
+      var sums = new Float64Array(K * 5);
+      var stride = Math.max(1, Math.floor(count / 400000));
+      for(var i = 0; i < count; i += stride){
+        var p = i * 4, a = d[p + 3];
+        var r = a ? d[p] : 0, g = a ? d[p + 1] : 0, b = a ? d[p + 2] : 0;
+        var k = match(r, g, b, a), o = k * 5;
+        sums[o] += r; sums[o + 1] += g; sums[o + 2] += b; sums[o + 3] += a; sums[o + 4]++;
+      }
+      for(k = 0; k < K; k++){
+        o = k * 5;
+        var n = sums[o + 4];
+        if(n){ P.r[k] = sums[o] / n; P.g[k] = sums[o + 1] / n; P.b[k] = sums[o + 2] / n; P.a[k] = sums[o + 3] / n; }
+      }
+    }
+
+    function clamp(v){ return v < 0 ? 0 : v > 255 ? 255 : v; }
+
+    // Floyd–Steinberg with damped error so flat areas stay clean.
+    function mapPixels(d, w, h, P, dither){
+      var count = w * h, out = new Uint8Array(count), match = makeMatcher(P);
+      var x, y, i, p;
+      if(!dither){
+        for(i = 0, p = 0; i < count; i++, p += 4){
+          out[i] = d[p + 3] ? match(d[p], d[p + 1], d[p + 2], d[p + 3]) : match(0, 0, 0, 0);
+        }
+        return out;
+      }
+      var S = 0.8;
+      var cur = new Float32Array((w + 2) * 4), nxt = new Float32Array((w + 2) * 4), tmp;
+      for(y = 0; y < h; y++){
+        for(x = 0; x < w; x++){
+          i = y * w + x; p = i * 4;
+          var e = (x + 1) * 4, a0 = d[p + 3];
+          if(a0 === 0){ out[i] = match(0, 0, 0, 0); continue; }
+          var r = clamp(d[p] + cur[e]), g = clamp(d[p + 1] + cur[e + 1]);
+          var b = clamp(d[p + 2] + cur[e + 2]), a = clamp(a0 + cur[e + 3]);
+          var k = match(r | 0, g | 0, b | 0, a | 0);
+          out[i] = k;
+          var er = (r - P.r[k]) * S, eg = (g - P.g[k]) * S, eb = (b - P.b[k]) * S, ea = (a - P.a[k]) * S;
+          cur[e + 4] += er * 0.4375; cur[e + 5] += eg * 0.4375; cur[e + 6] += eb * 0.4375; cur[e + 7] += ea * 0.4375;
+          nxt[e - 4] += er * 0.1875; nxt[e - 3] += eg * 0.1875; nxt[e - 2] += eb * 0.1875; nxt[e - 1] += ea * 0.1875;
+          nxt[e] += er * 0.3125; nxt[e + 1] += eg * 0.3125; nxt[e + 2] += eb * 0.3125; nxt[e + 3] += ea * 0.3125;
+          nxt[e + 4] += er * 0.0625; nxt[e + 5] += eg * 0.0625; nxt[e + 6] += eb * 0.0625; nxt[e + 7] += ea * 0.0625;
+        }
+        tmp = cur; cur = nxt; nxt = tmp; nxt.fill(0);
+      }
+      return out;
+    }
+
+    function encodePng(idx, pal, w, h){
+      var n = pal.length;
+      var depth = n <= 2 ? 1 : n <= 4 ? 2 : n <= 16 ? 4 : 8;
+      var rowBytes = Math.ceil(w * depth / 8);
+      var raw = new Uint8Array((rowBytes + 1) * h);
+      var p = 0, i = 0, x, y;
+      for(y = 0; y < h; y++){
+        raw[p++] = 0;
+        if(depth === 8){
+          raw.set(idx.subarray(i, i + w), p);
+          p += w; i += w;
+        } else {
+          var perByte = 8 / depth, acc = 0, cnt = 0;
+          for(x = 0; x < w; x++){
+            acc = (acc << depth) | idx[i++];
+            if(++cnt === perByte){ raw[p++] = acc; acc = 0; cnt = 0; }
+          }
+          if(cnt) raw[p++] = acc << (depth * (perByte - cnt));
+        }
+      }
+      var plte = new Uint8Array(n * 3), trnsLen = 0, k;
+      for(k = 0; k < n; k++){
+        var c = pal[k];
+        plte[k * 3] = c & 255; plte[k * 3 + 1] = (c >>> 8) & 255; plte[k * 3 + 2] = (c >>> 16) & 255;
+        if((c >>> 24) < 255) trnsLen = k + 1;
+      }
+      var trns = new Uint8Array(trnsLen);
+      for(k = 0; k < trnsLen; k++) trns[k] = pal[k] >>> 24;
+
+      return zlib(raw).then(function(z){
+        var ihdr = new Uint8Array(13), dv = new DataView(ihdr.buffer);
+        dv.setUint32(0, w); dv.setUint32(4, h);
+        ihdr[8] = depth; ihdr[9] = 3;
+        var chunks = [['IHDR', ihdr], ['PLTE', plte]];
+        if(trnsLen) chunks.push(['tRNS', trns]);
+        chunks.push(['IDAT', z], ['IEND', new Uint8Array(0)]);
+        var total = 8;
+        chunks.forEach(function(chk){ total += 12 + chk[1].length; });
+        var out = new Uint8Array(total), odv = new DataView(out.buffer), o = 8;
+        out.set([137, 80, 78, 71, 13, 10, 26, 10], 0);
+        chunks.forEach(function(chk){
+          var data = chk[1];
+          odv.setUint32(o, data.length); o += 4;
+          var start = o;
+          for(var q = 0; q < 4; q++) out[o++] = chk[0].charCodeAt(q);
+          out.set(data, o); o += data.length;
+          odv.setUint32(o, crc32(out, start, o)); o += 4;
+        });
+        return out;
+      });
+    }
+
+    // Drop unused entries and put translucent colors first so tRNS stays short.
+    function finish(idx, colors, w, h){
+      var used = new Uint8Array(colors.length), i;
+      for(i = 0; i < idx.length; i++) used[idx[i]] = 1;
+      var order = [];
+      for(i = 0; i < colors.length; i++) if(used[i]) order.push(i);
+      order.sort(function(a, b){ return (colors[a] >>> 24) - (colors[b] >>> 24); });
+      var remap = new Uint8Array(colors.length), pal = [];
+      for(i = 0; i < order.length; i++){ remap[order[i]] = i; pal.push(colors[order[i]]); }
+      for(i = 0; i < idx.length; i++) idx[i] = remap[idx[i]];
+      return encodePng(idx, pal, w, h);
+    }
+
+    function run(msg){
+      var w = msg.w, h = msg.h, count = w * h;
+      var d = new Uint8Array(msg.data), px = new Uint32Array(msg.data);
+      var exact = exactPalette(px, count);
+      if(exact) return finish(exact.idx, exact.colors, w, h).then(function(bytes){ return { bytes: bytes, colors: exact.colors.length, lossless: true }; });
+      if(!msg.maxColors) return Promise.resolve(null);
+      var P = buildPalette(d, count, msg.maxColors);
+      refine(d, count, P);
+      refine(d, count, P);
+      roundPalette(P);
+      var idx = mapPixels(d, w, h, P, msg.dither);
+      var colors = [];
+      for(var k = 0; k < P.n; k++) colors.push(((P.a[k] << 24) | (P.b[k] << 16) | (P.g[k] << 8) | P.r[k]) >>> 0);
+      return finish(idx, colors, w, h).then(function(bytes){ return { bytes: bytes, colors: P.n, lossless: false }; });
+    }
+
+    return {
+      run: function(msg){
+        try{ return run(msg); }catch(e){ return Promise.reject(e); }
+      }
+    };
+  }
+
+  const quantizer = (function(){
+    let worker = null, inline = null, seq = 0;
+    const pending = new Map();
+    function local(){ return inline || (inline = quantEngine()); }
+    function failAll(){
+      if(worker){ worker.terminate(); worker = null; }
+      pending.forEach(function(job){ local().run(job.msg).then(job.resolve, job.reject); });
+      pending.clear();
+    }
+    try{
+      const src = 'var E=(' + quantEngine.toString() + ')();' +
+        'self.onmessage=function(e){var d=e.data;E.run(d).then(function(r){' +
+        'if(r){self.postMessage({id:d.id,result:{colors:r.colors,lossless:r.lossless,bytes:r.bytes}},[r.bytes.buffer]);}' +
+        'else{self.postMessage({id:d.id,result:null});}' +
+        '},function(err){self.postMessage({id:d.id,error:String(err&&err.message||err)});});};';
+      const url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+      worker = new Worker(url);
+      worker.onmessage = function(e){
+        const job = pending.get(e.data.id);
+        if(!job) return;
+        pending.delete(e.data.id);
+        if(e.data.error) job.reject(new Error(e.data.error));
+        else job.resolve(e.data.result);
+      };
+      worker.onerror = function(e){ if(e && e.preventDefault) e.preventDefault(); failAll(); };
+    }catch(e){ worker = null; }
+    return {
+      run: function(msg){
+        if(!worker) return local().run(msg);
+        return new Promise(function(resolve, reject){
+          const id = ++seq;
+          pending.set(id, { msg: msg, resolve: resolve, reject: reject });
+          try{ worker.postMessage(Object.assign({ id: id }, msg)); }
+          catch(e){ pending.delete(id); local().run(msg).then(resolve, reject); }
+        });
+      }
+    };
+  })();
+
   /* ---------- quality ---------- */
 
   function qualityTier(v){
-    if(v < 50) return 'Low';
-    if(v < 70) return 'Medium';
-    if(v < 90) return 'High';
-    return 'Best';
+    if(v >= 100) return t('tierLossless');
+    if(v < 50) return t('tierLow');
+    if(v < 70) return t('tierMedium');
+    if(v < 90) return t('tierHigh');
+    return t('tierBest');
   }
 
   function updateQualityLabel(){
     const v = Number(qualityInput.value);
     qualityValue.textContent = v + '% · ' + qualityTier(v);
-    Array.prototype.forEach.call(qualityChips.querySelectorAll('.chip'), function(btn){
+    qualityChips.querySelectorAll('.chip').forEach(function(btn){
       const active = Number(btn.dataset.value) === v;
       btn.classList.toggle('chip-active', active);
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
+  }
+
+  function settingsChanged(delay){
+    settings.quality = Number(qualityInput.value);
+    settings.format = formatSelect.value;
+    settings.maxDim = Number(maxDimSelect.value) || 0;
+    const kb = Math.round(Number(targetInput.value));
+    settings.targetKB = kb >= 5 ? kb : 0;
+    saveSettings();
+    clearTimeout(debounceTimer);
+    if(delay) debounceTimer = setTimeout(recompressAll, delay);
+    else recompressAll();
   }
 
   qualityChips.addEventListener('click', function(e){
@@ -625,21 +1682,19 @@
     if(!btn) return;
     qualityInput.value = btn.dataset.value;
     updateQualityLabel();
-    clearTimeout(debounceTimer);
-    recompressAll();
+    settingsChanged(0);
   });
-
   qualityInput.addEventListener('input', function(){
     updateQualityLabel();
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(recompressAll, 200);
+    settingsChanged(250);
   });
-
-  pngToggle.addEventListener('change', recompressAll);
+  formatSelect.addEventListener('change', function(){ settingsChanged(0); });
+  maxDimSelect.addEventListener('change', function(){ settingsChanged(0); });
+  targetInput.addEventListener('input', function(){ settingsChanged(600); });
 
   /* ---------- file intake ---------- */
 
-  function addFiles(fileList){
+  function addFiles(fileList, dir){
     const incoming = Array.from(fileList);
     const zipFiles = incoming.filter(isZip);
     const rest = incoming.filter(function(f){ return !isZip(f); });
@@ -651,63 +1706,315 @@
     rest.forEach(function(f){
       if(detectImageMime(f)) files.push(f); else skipped++;
     });
-    if(skipped > 0){
-      showNotice(skipped + (skipped === 1 ? ' file' : ' files') + ' skipped — unsupported format');
-    }
+    if(skipped > 0) showNotice(t('skipped', { n: skipped }));
     if(files.length === 0) return;
 
-    emptyState.hidden = true;
     files.forEach(function(file){
-      const mime = detectImageMime(file);
       const item = {
         id: 'img' + (uid++),
         file: file,
-        mime: mime,
+        mime: detectImageMime(file),
         name: file.name,
+        dir: dir || '',
         originalSize: file.size,
-        status: 'processing',
-        compressedBlob: null,
-        compressedSize: 0,
-        compressedName: '',
+        srcUrl: URL.createObjectURL(file),
+        token: 0,
+        status: 'queued',
+        blob: null,
+        size: 0,
         url: null,
-        rowEl: null
+        outName: '',
+        outMime: '',
+        kept: false,
+        info: null,
+        rowEl: null,
+        removed: false
       };
       items.push(item);
       renderRow(item);
       if(file.size > MAX_FILE_SIZE){
-        markTooLarge(item);
+        item.status = 'toolarge';
+        updateRow(item);
       } else {
-        compressItem(item);
+        enqueue(item);
       }
     });
-    updateGlobalButtons();
+    updateGlobal();
+  }
+
+  function cleanZipPath(path){
+    return path.split('/').filter(function(seg){ return seg && seg !== '.' && seg !== '..'; });
   }
 
   function handleZipFile(file){
+    showNotice(t('zipLoading', { name: file.name }), true);
     ensureJSZip().then(function(JSZipLib){
       return JSZipLib.loadAsync(file);
     }).then(function(zip){
-      const entries = [];
-      zip.forEach(function(path, entry){ if(!entry.dir) entries.push(entry); });
-      const validEntries = entries.filter(function(entry){
-        const ext = (entry.name.split('.').pop() || '').toLowerCase();
-        return !!EXT_MIME[ext];
+      let entries = [];
+      zip.forEach(function(path, entry){
+        if(entry.dir) return;
+        const parts = cleanZipPath(path);
+        const base = parts[parts.length - 1] || '';
+        if(parts[0] === '__MACOSX' || base.charAt(0) === '.') return;
+        if(!EXT_MIME[extOf(base)]) return;
+        entries.push({ entry: entry, parts: parts });
       });
-      if(validEntries.length === 0){
-        showNotice('No supported images found inside ' + file.name);
+      notice.hidden = true;
+      if(entries.length === 0){
+        showNotice(t('zipEmpty', { name: file.name }));
         return;
       }
-      return Promise.all(validEntries.map(function(entry){
-        const ext = (entry.name.split('.').pop() || '').toLowerCase();
-        return entry.async('blob').then(function(blob){
-          const shortName = entry.name.split('/').pop();
-          return new File([blob], shortName, { type: EXT_MIME[ext] });
+      if(entries.length > MAX_ZIP_ENTRIES){
+        entries = entries.slice(0, MAX_ZIP_ENTRIES);
+        showNotice(t('zipLimit', { name: file.name, n: MAX_ZIP_ENTRIES }));
+      }
+      // Add entries one by one so rows appear quickly and memory stays flat.
+      return entries.reduce(function(chain, e){
+        return chain.then(function(){
+          return e.entry.async('blob').then(function(blob){
+            const base = e.parts[e.parts.length - 1];
+            const f = new File([blob], base, { type: EXT_MIME[extOf(base)] });
+            addFiles([f], e.parts.slice(0, -1).join('/'));
+          });
         });
-      })).then(function(extractedFiles){
-        addFiles(extractedFiles);
-      });
+      }, Promise.resolve());
     }).catch(function(){
-      showNotice('Could not read ' + file.name + ' as a zip');
+      showNotice(t('zipBad', { name: file.name }));
+    });
+  }
+
+  /* ---------- processing queue ---------- */
+
+  const queue = [];
+  let running = 0;
+
+  function enqueue(item){
+    if(queue.indexOf(item) === -1) queue.push(item);
+    pump();
+  }
+
+  function pump(){
+    while(running < CONCURRENCY && queue.length){
+      const item = queue.shift();
+      if(item.removed) continue;
+      running++;
+      processItem(item).catch(function(){}).then(function(){
+        running--;
+        pump();
+      });
+    }
+  }
+
+  function decodeImage(url){
+    const img = new Image();
+    img.decoding = 'async';
+    const loaded = new Promise(function(resolve, reject){
+      img.onload = function(){ resolve(img); };
+      img.onerror = function(){ reject(new Error('decode')); };
+    });
+    loaded.catch(function(){});
+    img.src = url;
+    if(!img.decode) return loaded;
+    return img.decode().then(function(){ return img; }, function(){ return loaded; });
+  }
+
+  function toBlob(canvas, type, quality){
+    return new Promise(function(resolve, reject){
+      canvas.toBlob(function(b){ b ? resolve(b) : reject(new Error('encode')); }, type, quality);
+    });
+  }
+
+  function newCanvas(w, h){
+    const c = document.createElement('canvas');
+    c.width = w;
+    c.height = h;
+    return c;
+  }
+
+  function freeCanvas(c){ if(c && c.getContext){ c.width = 0; c.height = 0; } }
+
+  // Downscale in halving steps for smoother results on big reductions.
+  function drawScaled(src, sw, sh, w, h, fillWhite){
+    let cur = src, cw = sw, ch = sh;
+    const temps = [];
+    while(cw >= w * 2 && ch >= h * 2){
+      const nw = Math.max(w, Math.round(cw / 2)), nh = Math.max(h, Math.round(ch / 2));
+      const step = newCanvas(nw, nh);
+      const sctx = step.getContext('2d');
+      sctx.imageSmoothingQuality = 'high';
+      sctx.drawImage(cur, 0, 0, nw, nh);
+      temps.push(step);
+      cur = step; cw = nw; ch = nh;
+    }
+    const out = newCanvas(w, h);
+    const ctx = out.getContext('2d');
+    if(fillWhite){
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, w, h);
+    }
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(cur, 0, 0, w, h);
+    temps.forEach(freeCanvas);
+    return out;
+  }
+
+  function resolveOutMime(inMime, format){
+    if(format !== 'auto') return format;
+    switch(inMime){
+      case 'image/jpeg': return 'image/jpeg';
+      case 'image/png': return 'image/png';
+      case 'image/gif': return 'image/png';
+      case 'image/webp': return CAN_WEBP ? 'image/webp' : 'image/png';
+      case 'image/avif': return CAN_AVIF ? 'image/avif' : (CAN_WEBP ? 'image/webp' : 'image/png');
+      default: return 'image/jpeg';
+    }
+  }
+
+  function paletteSize(q){
+    if(q >= 100) return 0;
+    if(q >= 85) return 256;
+    if(q >= 70) return 192;
+    if(q >= 55) return 128;
+    if(q >= 40) return 64;
+    if(q >= 25) return 32;
+    return 16;
+  }
+
+  async function encodePng(canvas, quality, info){
+    if(HAS_COMPRESSION_STREAM){
+      try{
+        const data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
+        const r = await quantizer.run({ data: data.data.buffer, w: canvas.width, h: canvas.height, maxColors: paletteSize(quality), dither: true });
+        if(r){
+          info.colors = r.colors;
+          info.lossless = r.lossless;
+          return new Blob([r.bytes], { type: 'image/png' });
+        }
+      }catch(e){ /* fall back to the browser encoder */ }
+    }
+    info.lossless = true;
+    return toBlob(canvas, 'image/png');
+  }
+
+  // Binary-search the quality that fits under `target` bytes.
+  async function encodeLossy(canvas, mime, q, target){
+    const first = await toBlob(canvas, mime, q);
+    if(!target || first.size <= target) return { blob: first, missed: false };
+    if(first.type && first.type !== mime) return { blob: first, missed: true, fixed: true };
+    let lo = 0.02, hi = q, fit = null, smallest = first;
+    for(let i = 0; i < 7; i++){
+      const mid = (lo + hi) / 2;
+      const b = await toBlob(canvas, mime, mid);
+      if(b.size <= target){ fit = b; lo = mid; }
+      else { hi = mid; if(b.size < smallest.size) smallest = b; }
+    }
+    if(fit) return { blob: fit, missed: false };
+    const floor = await toBlob(canvas, mime, 0.02);
+    if(floor.size <= target) return { blob: floor, missed: false };
+    return { blob: floor.size < smallest.size ? floor : smallest, missed: true };
+  }
+
+  async function processItem(item){
+    const token = item.token;
+    const s = Object.assign({}, settings);
+    const stale = function(){ return item.removed || token !== item.token; };
+    item.status = 'processing';
+    updateRow(item);
+
+    let img;
+    try{
+      img = await decodeImage(item.srcUrl);
+    }catch(e){
+      if(stale()) return;
+      item.status = (item.mime === 'image/heic' || item.mime === 'image/heif' || item.mime === 'image/avif') ? 'unsupported' : 'error';
+      updateRow(item); updateGlobal();
+      return;
+    }
+    if(stale()) return;
+
+    try{
+      const nw = img.naturalWidth, nh = img.naturalHeight;
+      if(!nw || !nh) throw new Error('empty');
+      let scale = 1;
+      const longest = Math.max(nw, nh);
+      if(s.maxDim && longest > s.maxDim) scale = s.maxDim / longest;
+      const hardLimit = Math.min(1, MAX_DIMENSION / longest, Math.sqrt(MAX_AREA / (nw * nh)));
+      const limited = hardLimit < scale;
+      scale = Math.min(scale, hardLimit);
+      let w = Math.max(1, Math.round(nw * scale)), h = Math.max(1, Math.round(nh * scale));
+
+      const outMime = resolveOutMime(item.mime, s.format);
+      const opaque = outMime === 'image/jpeg';
+      let canvas = drawScaled(img, nw, nh, w, h, opaque);
+      img = null;
+      const info = { srcW: nw, srcH: nh, limited: limited, missed: false, targetNA: false };
+      const target = s.targetKB ? s.targetKB * 1024 : 0;
+
+      let blob;
+      if(outMime === 'image/png'){
+        blob = await encodePng(canvas, s.quality, info);
+        info.targetNA = !!target;
+      } else {
+        let r = await encodeLossy(canvas, outMime, s.quality / 100, target);
+        let guard = 0;
+        while(r.missed && !r.fixed && target && guard++ < 12 && w > 32 && h > 32 && !stale()){
+          w = Math.max(1, Math.round(w * 0.82));
+          h = Math.max(1, Math.round(h * 0.82));
+          const smaller = drawScaled(canvas, canvas.width, canvas.height, w, h, opaque);
+          freeCanvas(canvas);
+          canvas = smaller;
+          r = await encodeLossy(canvas, outMime, s.quality / 100, target);
+        }
+        blob = r.blob;
+        info.missed = r.missed;
+      }
+      freeCanvas(canvas);
+      if(stale()) return;
+
+      const actualMime = blob.type || outMime;
+      const resized = w !== nw || h !== nh;
+      let kept = false;
+      if(!resized && blob.size >= item.originalSize &&
+        (actualMime === item.mime || (s.format === 'auto' && item.mime === 'image/gif'))){
+        blob = item.file;
+        kept = true;
+      }
+      const finalMime = kept ? item.mime : actualMime;
+
+      if(item.url) URL.revokeObjectURL(item.url);
+      item.blob = blob;
+      item.size = blob.size;
+      item.kept = kept;
+      item.outMime = finalMime;
+      item.url = kept ? null : URL.createObjectURL(blob);
+      item.outName = buildCompressedName(item, finalMime);
+      info.outW = kept ? nw : w;
+      info.outH = kept ? nh : h;
+      item.info = info;
+      item.status = 'done';
+    }catch(e){
+      if(stale()) return;
+      item.status = 'error';
+    }
+    updateRow(item);
+    updateGlobal();
+  }
+
+  function buildCompressedName(item, mime){
+    const parts = splitName(item.name);
+    let ext = MIME_EXT[mime] || 'jpg';
+    if(mime === item.mime && parts.ext) ext = parts.ext;
+    return parts.base + '-compress.' + ext;
+  }
+
+  function recompressAll(){
+    items.forEach(function(item){
+      if(item.status === 'toolarge' || item.status === 'unsupported') return;
+      item.token++;
+      item.status = 'queued';
+      updateRow(item);
+      enqueue(item);
     });
   }
 
@@ -716,176 +2023,261 @@
   function renderRow(item){
     const row = document.createElement('div');
     row.className = 'row';
-    row.id = 'row-' + item.id;
-    const forced = item.mime === 'image/gif' || item.mime === 'image/bmp';
     row.innerHTML =
-      '<div class="row-main">' +
-        '<span class="row-name" title="' + escapeHtml(item.name) + '">' + escapeHtml(item.name) + '</span>' +
-        (forced ? '<span class="format-note">auto &rarr; JPG</span>' : '') +
-        '<span class="row-sizes">' +
-          '<span class="size-before">' + formatBytes(item.originalSize) + '</span>' +
-          '<span class="row-arrow">&rarr;</span>' +
-          '<span class="size-after" data-role="after">compressing…</span>' +
-        '</span>' +
-        '<span class="row-badge badge-neutral" data-role="badge">&mdash;</span>' +
-        '<button class="row-download" data-role="download" disabled aria-label="Download compressed ' + escapeHtml(item.name) + '">&darr;</button>' +
-      '</div>' +
-      '<div class="bar"><div class="bar-fill" data-role="fill" style="width:100%"></div></div>';
+      '<button type="button" class="row-thumb" data-role="thumb" disabled><img alt="" decoding="async" loading="lazy"></button>' +
+      '<div class="row-body">' +
+        '<div class="row-main">' +
+          '<span class="row-name" title="' + escapeHtml(item.dir ? item.dir + '/' + item.name : item.name) + '">' + escapeHtml(item.name) + '</span>' +
+          '<span class="format-note" data-role="note"></span>' +
+          '<span class="row-sizes">' +
+            '<span class="size-before">' + formatBytes(item.originalSize) + '</span>' +
+            '<span class="row-arrow" aria-hidden="true">&rarr;</span>' +
+            '<span class="size-after" data-role="after"></span>' +
+          '</span>' +
+          '<span class="row-badge badge-neutral" data-role="badge">&mdash;</span>' +
+          '<span class="row-btns">' +
+            '<button type="button" class="row-btn" data-role="download" disabled>&darr;</button>' +
+            '<button type="button" class="row-btn row-remove" data-role="remove">&times;</button>' +
+          '</span>' +
+        '</div>' +
+        '<div class="bar"><div class="bar-fill" data-role="fill"></div></div>' +
+        '<div class="row-meta" data-role="meta"></div>' +
+      '</div>';
     list.appendChild(row);
     item.rowEl = row;
-    row.querySelector('[data-role="download"]').addEventListener('click', function(){ downloadItem(item); });
-  }
-
-  function compressItem(item){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      const img = new Image();
-      img.onload = function(){
-        const quality = Number(qualityInput.value) / 100;
-        const isPng = item.mime === 'image/png';
-        const forcedJpeg = item.mime === 'image/gif' || item.mime === 'image/bmp';
-        const convertPng = isPng && pngToggle.checked;
-        const outMime = forcedJpeg ? 'image/jpeg' : (convertPng ? 'image/jpeg' : item.mime);
-        const needsWhiteBg = forcedJpeg || convertPng;
-
-        let w = img.naturalWidth, h = img.naturalHeight;
-        const longest = Math.max(w, h);
-        if(longest > MAX_DIMENSION){
-          const scale = MAX_DIMENSION / longest;
-          w = Math.round(w * scale);
-          h = Math.round(h * scale);
-        }
-
-        const canvas = document.createElement('canvas');
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-
-        if(needsWhiteBg){
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillRect(0, 0, w, h);
-        }
-        ctx.drawImage(img, 0, 0, w, h);
-
-        canvas.toBlob(function(blob){
-          if(!blob){ markError(item); return; }
-          if(item.url) URL.revokeObjectURL(item.url);
-          item.compressedBlob = blob;
-          item.compressedSize = blob.size;
-          item.compressedName = buildCompressedName(item.name, (forcedJpeg || convertPng) ? 'jpg' : null);
-          item.url = URL.createObjectURL(blob);
-          item.status = 'done';
-          updateRow(item);
-          updateGlobalButtons();
-        }, outMime, outMime === 'image/png' ? undefined : quality);
-      };
-      img.onerror = function(){ markError(item); };
-      img.src = e.target.result;
+    item.el = {
+      thumb: row.querySelector('[data-role="thumb"]'),
+      img: row.querySelector('.row-thumb img'),
+      note: row.querySelector('[data-role="note"]'),
+      before: row.querySelector('.size-before'),
+      after: row.querySelector('[data-role="after"]'),
+      badge: row.querySelector('[data-role="badge"]'),
+      download: row.querySelector('[data-role="download"]'),
+      remove: row.querySelector('[data-role="remove"]'),
+      fill: row.querySelector('[data-role="fill"]'),
+      meta: row.querySelector('[data-role="meta"]')
     };
-    reader.onerror = function(){ markError(item); };
-    reader.readAsDataURL(item.file);
+    item.el.download.addEventListener('click', function(){ downloadItem(item); });
+    item.el.remove.addEventListener('click', function(){ removeItem(item); });
+    item.el.thumb.addEventListener('click', function(){ openCompare(item); });
+    refreshRowLabels(item);
+    updateRow(item);
   }
 
-  function markError(item){
-    item.status = 'error';
-    const row = item.rowEl;
-    if(!row) return;
-    row.classList.add('row-error');
-    row.querySelector('[data-role="after"]').textContent = 'could not read file';
-  }
-
-  function markTooLarge(item){
-    item.status = 'toolarge';
-    const row = item.rowEl;
-    if(!row) return;
-    row.classList.add('row-toolarge');
-    row.querySelector('[data-role="after"]').textContent = 'too large — max 20 MB';
+  function refreshRowLabels(item){
+    const el = item.el;
+    if(!el) return;
+    el.download.setAttribute('aria-label', t('download', { name: item.name }));
+    el.download.title = t('download', { name: '' }).trim();
+    el.remove.setAttribute('aria-label', t('remove', { name: item.name }));
+    el.remove.title = t('remove', { name: '' }).trim();
+    el.thumb.setAttribute('aria-label', t('compare') + ': ' + item.name);
+    el.before.textContent = formatBytes(item.originalSize);
   }
 
   function updateRow(item){
+    const el = item.el;
+    if(!el) return;
     const row = item.rowEl;
-    if(!row) return;
-    row.querySelector('[data-role="after"]').textContent = formatBytes(item.compressedSize);
+    const busy = item.status === 'queued' || item.status === 'processing';
+    const failed = item.status === 'error' || item.status === 'unsupported' || item.status === 'toolarge';
+    row.classList.toggle('row-busy', busy);
+    row.classList.toggle('row-error', failed);
 
-    const pct = Math.round((1 - item.compressedSize / item.originalSize) * 100);
-    const badge = row.querySelector('[data-role="badge"]');
-    if(pct > 0){
-      badge.textContent = '-' + pct + '%';
-      badge.classList.remove('badge-neutral');
-    } else {
-      badge.textContent = 'no gain';
-      badge.classList.add('badge-neutral');
+    if(item.status !== 'done'){
+      el.after.textContent = {
+        queued: t('queued'), processing: t('processing'), error: t('errRead'),
+        unsupported: t('errUnsupported'), toolarge: t('errTooLarge')
+      }[item.status] || '';
+      el.badge.textContent = '—';
+      el.badge.classList.add('badge-neutral');
+      el.download.disabled = !item.blob || busy || failed;
+      if(failed){
+        el.download.disabled = true;
+        el.thumb.disabled = true;
+        el.meta.textContent = '';
+        el.note.textContent = '';
+      }
+      return;
     }
 
-    const fill = row.querySelector('[data-role="fill"]');
-    const ratio = Math.min(100, Math.max(2, (item.compressedSize / item.originalSize) * 100));
-    fill.style.width = ratio + '%';
+    el.after.textContent = formatBytes(item.size);
+    const pct = Math.round((1 - item.size / item.originalSize) * 100);
+    if(item.kept){
+      el.badge.textContent = t('original');
+      el.badge.classList.add('badge-neutral');
+    } else if(pct > 0){
+      el.badge.textContent = '−' + pct + '%';
+      el.badge.classList.remove('badge-neutral');
+    } else {
+      el.badge.textContent = pct === 0 ? t('noGain') : '+' + (-pct) + '%';
+      el.badge.classList.add('badge-neutral');
+    }
+    el.fill.style.width = Math.min(100, Math.max(2, item.size / item.originalSize * 100)) + '%';
+    el.download.disabled = false;
+    el.thumb.disabled = false;
+    el.img.src = item.url || item.srcUrl;
 
-    row.querySelector('[data-role="download"]').disabled = false;
+    const inExt = (MIME_EXT[item.mime] || extOf(item.name)).toUpperCase();
+    const outExt = (MIME_EXT[item.outMime] || '').toUpperCase();
+    el.note.textContent = (!item.kept && outExt && outExt !== inExt) ? '→ ' + outExt : '';
+
+    const info = item.info || {};
+    const meta = [];
+    if(info.outW && (info.outW !== info.srcW || info.outH !== info.srcH)){
+      meta.push(escapeHtml(info.srcW + '×' + info.srcH + ' → ' + info.outW + '×' + info.outH));
+    } else if(info.outW){
+      meta.push(escapeHtml(info.outW + '×' + info.outH));
+    }
+    if(!item.kept && item.outMime === 'image/png'){
+      if(info.colors) meta.push(escapeHtml(t('colors', { n: info.colors })) + (info.lossless ? ' · ' + escapeHtml(t('lossless')) : ''));
+      else if(info.lossless) meta.push(escapeHtml(t('lossless')));
+    }
+    if(item.kept) meta.push(escapeHtml(t('keptOriginal')));
+    if(info.limited) meta.push('<span class="warn">' + escapeHtml(t('limited')) + '</span>');
+    if(info.missed) meta.push('<span class="warn">' + escapeHtml(t('targetMissed')) + '</span>');
+    if(info.targetNA) meta.push('<span class="warn">' + escapeHtml(t('targetPng')) + '</span>');
+    el.meta.innerHTML = meta.join(' · ');
   }
 
-  function recompressAll(){
-    items.forEach(function(item){
-      if(item.status !== 'error' && item.status !== 'toolarge'){
-        item.status = 'processing';
-        compressItem(item);
-      }
-    });
+  function updateGlobal(){
+    const hasItems = items.length > 0;
+    const done = items.filter(function(i){ return i.status === 'done'; });
+    clearAllBtn.disabled = !hasItems;
+    emptyState.hidden = hasItems;
+    if(!downloadAllBtn.dataset.busy){
+      downloadAllBtn.disabled = done.length === 0;
+      downloadAllBtn.textContent = t('downloadAll') + (done.length > 1 ? ' (' + done.length + ')' : '');
+    }
+    if(done.length === 0){
+      summaryEl.innerHTML = '';
+      return;
+    }
+    let before = 0, after = 0;
+    done.forEach(function(i){ before += i.originalSize; after += i.size; });
+    const pct = Math.round((1 - after / before) * 100);
+    const vars = { files: escapeHtml(filesLabel(done.length)), before: formatBytes(before), after: formatBytes(after), pct: pct };
+    summaryEl.innerHTML = t(pct > 0 ? 'summary' : 'summaryNoGain', vars);
   }
 
   /* ---------- downloads ---------- */
 
   function downloadItem(item){
-    if(!item.url) return;
-    const a = document.createElement('a');
-    a.href = item.url;
-    a.download = item.compressedName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    if(item.status !== 'done') return;
+    const url = item.url || item.srcUrl;
+    triggerDownload(url, item.outName);
   }
 
   function downloadAll(){
     const ready = items.filter(function(i){ return i.status === 'done'; });
     if(ready.length === 0) return;
+    if(ready.length === 1){ downloadItem(ready[0]); return; }
+    downloadAllBtn.dataset.busy = '1';
     downloadAllBtn.disabled = true;
-    const originalLabel = downloadAllBtn.textContent;
-    downloadAllBtn.textContent = 'Zipping…';
+    downloadAllBtn.textContent = t('zipping');
     ensureJSZip().then(function(JSZipLib){
       const zip = new JSZipLib();
-      ready.forEach(function(item){ zip.file(item.compressedName, item.compressedBlob); });
-      return zip.generateAsync({ type: 'blob' });
+      const used = Object.create(null);
+      ready.forEach(function(item){
+        let path = (item.dir ? item.dir + '/' : '') + item.outName;
+        if(used[path.toLowerCase()]){
+          const p = splitName(path);
+          let n = 2;
+          while(used[(p.base + ' (' + n + ').' + p.ext).toLowerCase()]) n++;
+          path = p.base + ' (' + n + ').' + p.ext;
+        }
+        used[path.toLowerCase()] = true;
+        zip.file(path, item.blob, { binary: true });
+      });
+      // Images are already compressed: storing them is as small as deflating, and much faster.
+      return zip.generateAsync({ type: 'blob', compression: 'STORE' });
     }).then(function(blob){
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'compressed-images.zip';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+      triggerDownload(url, 'compressed-images.zip');
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 10000);
     }).catch(function(){
-      showNotice('Could not build the zip — check your connection and try again');
-    }).finally(function(){
-      downloadAllBtn.textContent = originalLabel;
-      updateGlobalButtons();
+      showNotice(t('zipFail'));
+    }).then(function(){
+      delete downloadAllBtn.dataset.busy;
+      updateGlobal();
     });
   }
 
-  function clearAll(){
-    items.forEach(function(item){ if(item.url) URL.revokeObjectURL(item.url); });
-    items = [];
-    list.innerHTML = '';
-    emptyState.hidden = false;
-    updateGlobalButtons();
+  function releaseItem(item){
+    item.removed = true;
+    item.token++;
+    if(item.url) URL.revokeObjectURL(item.url);
+    if(item.srcUrl) URL.revokeObjectURL(item.srcUrl);
+    item.url = item.srcUrl = null;
+    item.blob = null;
   }
 
-  function updateGlobalButtons(){
-    const hasItems = items.length > 0;
-    const hasDone = items.some(function(i){ return i.status === 'done'; });
-    clearAllBtn.disabled = !hasItems;
-    downloadAllBtn.disabled = !hasDone;
+  function removeItem(item){
+    releaseItem(item);
+    if(item.rowEl) item.rowEl.remove();
+    items = items.filter(function(i){ return i !== item; });
+    updateGlobal();
   }
+
+  function clearAll(){
+    items.forEach(releaseItem);
+    items = [];
+    queue.length = 0;
+    list.innerHTML = '';
+    updateGlobal();
+  }
+
+  /* ---------- compare dialog ---------- */
+
+  const compare = $('compare');
+  const compareStage = $('compareStage');
+  const compareBefore = $('compareBefore');
+  const compareAfter = $('compareAfter');
+  const compareLine = $('compareLine');
+  const compareRange = $('compareRange');
+
+  function setComparePos(pct){
+    pct = Math.max(0, Math.min(100, pct));
+    compareAfter.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
+    compareLine.style.left = pct + '%';
+    compareRange.value = pct;
+  }
+
+  function openCompare(item){
+    if(item.status !== 'done' || !compare.showModal) return;
+    const info = item.info || {};
+    const w = info.outW || 4, h = info.outH || 3;
+    compareStage.style.aspectRatio = w + ' / ' + h;
+    compareStage.style.width = 'min(100%, calc(72vh * ' + (w / h).toFixed(4) + '))';
+    compareBefore.src = item.srcUrl;
+    compareAfter.src = item.url || item.srcUrl;
+    $('compareTitle').textContent = item.name;
+    $('compareLabelBefore').textContent = t('before') + ' · ' + formatBytes(item.originalSize);
+    $('compareLabelAfter').textContent = t('after') + ' · ' + formatBytes(item.size);
+    setComparePos(50);
+    compare.showModal();
+  }
+
+  let dragging = false;
+  function posFromEvent(e){
+    const rect = compareStage.getBoundingClientRect();
+    return (e.clientX - rect.left) / rect.width * 100;
+  }
+  compareStage.addEventListener('pointerdown', function(e){
+    dragging = true;
+    compareStage.setPointerCapture(e.pointerId);
+    setComparePos(posFromEvent(e));
+  });
+  compareStage.addEventListener('pointermove', function(e){ if(dragging) setComparePos(posFromEvent(e)); });
+  compareStage.addEventListener('pointerup', function(){ dragging = false; });
+  compareStage.addEventListener('pointercancel', function(){ dragging = false; });
+  compareRange.addEventListener('input', function(){ setComparePos(Number(compareRange.value)); });
+  $('compareClose').addEventListener('click', function(){ compare.close(); });
+  compare.addEventListener('click', function(e){ if(e.target === compare) compare.close(); });
+  compare.addEventListener('close', function(){
+    compareBefore.removeAttribute('src');
+    compareAfter.removeAttribute('src');
+  });
 
   /* ---------- events ---------- */
 
@@ -896,20 +2288,56 @@
       fileInput.click();
     }
   });
-  ['dragenter', 'dragover'].forEach(function(evt){
-    dropzone.addEventListener(evt, function(e){
-      e.preventDefault();
-      dropzone.classList.add('dropzone-active');
-    });
+
+  // Accept drops anywhere on the page, not just on the dropzone.
+  let dragDepth = 0;
+  function hasFiles(e){
+    return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') !== -1;
+  }
+  window.addEventListener('dragenter', function(e){
+    if(!hasFiles(e)) return;
+    e.preventDefault();
+    dragDepth++;
+    dropzone.classList.add('dropzone-active');
   });
-  ['dragleave', 'drop'].forEach(function(evt){
-    dropzone.addEventListener(evt, function(e){
-      e.preventDefault();
-      dropzone.classList.remove('dropzone-active');
-    });
+  window.addEventListener('dragover', function(e){
+    if(!hasFiles(e)) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
   });
-  dropzone.addEventListener('drop', function(e){
-    if(e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+  window.addEventListener('dragleave', function(e){
+    if(!hasFiles(e)) return;
+    dragDepth = Math.max(0, dragDepth - 1);
+    if(dragDepth === 0) dropzone.classList.remove('dropzone-active');
+  });
+  window.addEventListener('drop', function(e){
+    if(!hasFiles(e)) return;
+    e.preventDefault();
+    dragDepth = 0;
+    dropzone.classList.remove('dropzone-active');
+    if(e.dataTransfer.files && e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+  });
+
+  document.addEventListener('paste', function(e){
+    const target = e.target;
+    if(target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+    const data = e.clipboardData;
+    if(!data) return;
+    let files = Array.from(data.files || []);
+    if(!files.length && data.items){
+      Array.from(data.items).forEach(function(it){
+        if(it.kind === 'file'){ const f = it.getAsFile(); if(f) files.push(f); }
+      });
+    }
+    if(!files.length) return;
+    e.preventDefault();
+    const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+    files = files.map(function(f, i){
+      if(f.name && !/^image\.\w+$/i.test(f.name)) return f;
+      const ext = MIME_EXT[f.type] || 'png';
+      return new File([f], 'pasted-' + stamp + (files.length > 1 ? '-' + (i + 1) : '') + '.' + ext, { type: f.type });
+    });
+    addFiles(files);
   });
 
   fileInput.addEventListener('change', function(){
@@ -920,7 +2348,31 @@
   downloadAllBtn.addEventListener('click', downloadAll);
   clearAllBtn.addEventListener('click', clearAll);
 
-  updateQualityLabel();
+  /* ---------- install & offline ---------- */
+
+  let installPrompt = null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    installPrompt = e;
+    installBtn.hidden = false;
+  });
+  installBtn.addEventListener('click', function(){
+    if(!installPrompt) return;
+    installPrompt.prompt();
+    installPrompt.userChoice.finally(function(){
+      installPrompt = null;
+      installBtn.hidden = true;
+    });
+  });
+  window.addEventListener('appinstalled', function(){ installBtn.hidden = true; });
+
+  if('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js').catch(function(){});
+    });
+  }
+
+  applyLang();
 })();
 </script>
 </body>
