@@ -803,6 +803,17 @@
     .faq{ margin-top:56px; }
   }
 
+  /* short laptop screens (≈720px tall minus browser chrome) */
+  @media (min-width:960px) and (max-height:700px){
+    body{ padding-top:14px; }
+    .topbar{ margin-bottom:8px; }
+    .eyebrow{ display:none; }
+    .sub{ margin-bottom:18px; }
+    .dropzone{ padding:28px 20px; }
+    .controls{ gap:14px; padding-top:14px; padding-bottom:16px; top:14px; }
+    .fields{ gap:12px; }
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; animation:none !important; }
   }
