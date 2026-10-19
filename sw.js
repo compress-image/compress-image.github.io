@@ -1,6 +1,6 @@
 // Offline support: the app shell is cached so the compressor works without a network.
 // Bump VERSION whenever the cached files change.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = 'image-compressor-' + VERSION;
 const CORE = [
   './',
