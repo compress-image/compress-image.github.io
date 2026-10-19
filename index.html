@@ -754,6 +754,55 @@
     .summary{ flex-basis:100%; }
   }
 
+  /* ---------- desktop: settings sidebar, everything above the fold ---------- */
+
+  @media (min-width:960px){
+    body{ padding:20px 28px 64px; }
+    .wrap{ max-width:1120px; }
+    .topbar{ margin-bottom:20px; }
+    .eyebrow{ margin-bottom:10px; }
+    h1{ font-size:32px; margin-bottom:10px; }
+    .sub{ max-width:96ch; margin-bottom:24px; }
+
+    .workspace{
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) 340px;
+      grid-template-rows:auto auto auto auto auto 1fr;
+      grid-template-areas:
+        "drop    side"
+        "notice  side"
+        "list    side"
+        "empty   side"
+        "actions side"
+        ".       side";
+      column-gap:24px;
+    }
+    .dropzone{ grid-area:drop; padding:40px 20px; }
+    .notice{ grid-area:notice; }
+    .list{ grid-area:list; margin-top:20px; }
+    .list:empty{ margin-top:0; }
+    .empty-state{ grid-area:empty; margin-top:20px; }
+    .actions{ grid-area:actions; }
+
+    .controls{
+      grid-area:side;
+      align-self:start;
+      position:sticky;
+      top:20px;
+      margin:0;
+      gap:18px;
+    }
+    .fields{ grid-template-columns:1fr; gap:16px; }
+
+    /* once files are in, the dropzone steps aside for the list */
+    .workspace:has(.row) .dropzone{ padding:18px 20px; }
+    .workspace:has(.row) .dropzone-icon,
+    .workspace:has(.row) .corner{ display:none; }
+    .workspace:has(.row) .dropzone-title{ font-size:15px; margin-bottom:4px; }
+
+    .faq{ margin-top:56px; }
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; animation:none !important; }
   }
@@ -793,6 +842,7 @@
         <p class="sub" data-i18n-html="sub">Everything is resized and re-encoded on your device — nothing is uploaded. EXIF and GPS metadata is stripped, and downloads keep the original filename with a <code>-compress</code> tag.</p>
       </div>
 
+      <div class="workspace">
       <div class="dropzone" id="dropzone" tabindex="0" role="button" data-i18n-aria="dropAria" aria-label="Choose images to compress">
         <span class="corner corner-tl"></span>
         <span class="corner corner-tr"></span>
@@ -876,6 +926,7 @@
         <p class="summary" id="summary" aria-live="polite"></p>
         <button class="action-btn" id="clearAll" disabled data-i18n="clearAll">Clear all</button>
         <button class="action-btn primary" id="downloadAll" disabled>Download all</button>
+      </div>
       </div>
 
       <section class="faq" aria-labelledby="faqTitle">
